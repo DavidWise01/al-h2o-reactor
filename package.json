@@ -1,0 +1,43 @@
+{
+  "name": "al-h2o-reactor",
+  "version": "1.0.0",
+  "description": "AL-H₂O on-board hydrogen generation system — engineering reference suite. Aluminum + water + imidazole catalyst → H₂ + electricity. MIT chemistry, TriPod engineering architecture, The Cascade deployment framework.",
+  "author": "David Lee Wise (ROOT0) / TriPod LLC",
+  "license": "CC-BY-ND-4.0",
+  "homepage": "https://github.com/DavidWise01/al-h2o-reactor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DavidWise01/al-h2o-reactor.git"
+  },
+  "keywords": [
+    "hydrogen",
+    "aluminum",
+    "al-h2o",
+    "fuel-cell",
+    "pem",
+    "reactor",
+    "clean-energy",
+    "imidazole",
+    "boehmite",
+    "gain",
+    "seawater",
+    "on-board-generation",
+    "the-cascade",
+    "tripod",
+    "root0",
+    "engineering",
+    "visualization",
+    "three-js",
+    "thermodynamics"
+  ],
+  "files": [
+    "README.md",
+    "CHEMISTRY.md",
+    "SPECS.md",
+    "SAFETY.md",
+    "BOM.md",
+    ".attribution",
+    "docs/",
+    "viz/"
+  ]
+}

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900"
+     style="background:#080808; font-family:'Courier New',monospace;">
+
+  <!-- ═══ BACKGROUND GRID ═══ -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1a1d20" stroke-width="0.5"/>
+    </pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#38b6a0"/>
+    </marker>
+    <marker id="arrow-ember" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#c45a2d"/>
+    </marker>
+    <marker id="arrow-al" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#8a9aaa"/>
+    </marker>
+    <marker id="arrow-water" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3a6a8a"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="900" fill="#080808"/>
+  <rect width="1200" height="900" fill="url(#grid)"/>
+
+  <!-- ═══ TITLE BLOCK ═══ -->
+  <rect x="20" y="20" width="1160" height="60" fill="none" stroke="#2a2d30" stroke-width="1"/>
+  <text x="40" y="45" fill="#c8c2b6" font-size="16" font-weight="bold" letter-spacing="4">AL-H₂O REACTOR // ENGINEERING SCHEMATIC</text>
+  <text x="40" y="65" fill="#7a7466" font-size="10" letter-spacing="2">TRIPOD LLC // DRAWING REV A // 2025 // SCALE: SCHEMATIC (NOT TO SCALE)</text>
+  <text x="900" y="45" fill="#38b6a0" font-size="11" letter-spacing="1">ROOT0 / DavidWise01</text>
+  <text x="900" y="65" fill="#7a7466" font-size="10">CC-BY-ND-4.0</text>
+  <line x1="20" y1="80" x2="1180" y2="80" stroke="#2a2d30" stroke-width="1"/>
+
+  <!-- ═══ STAGE 1: PELLET HOPPER ═══ -->
+  <!-- Hopper body (trapezoid) -->
+  <polygon points="80,120 160,120 150,200 90,200" fill="#1a1d20" stroke="#8a9aaa" stroke-width="1.5"/>
+  <text x="120" y="145" fill="#8a9aaa" font-size="10" text-anchor="middle">Al PELLETS</text>
+  <text x="120" y="160" fill="#7a7466" font-size="9" text-anchor="middle">36 kg</text>
+  <text x="120" y="175" fill="#7a7466" font-size="8" text-anchor="middle">GaIn coated</text>
+  <!-- Hopper cap -->
+  <rect x="72" y="112" width="96" height="10" fill="#2a2d30" stroke="#8a9aaa" stroke-width="1"/>
+  <!-- Label -->
+  <text x="120" y="215" fill="#c8c2b6" font-size="9" text-anchor="middle" letter-spacing="1">① HOPPER</text>
+  <!-- Auger tube down -->
+  <rect x="110" y="200" width="20" height="50" fill="#1a1d20" stroke="#6a7a8a" stroke-width="1"/>
+  <text x="120" y="270" fill="#7a7466" font-size="8" text-anchor="middle">AUGER</text>
+
+  <!-- Flow arrow: Al pellets to chamber -->
+  <line x1="120" y1="280" x2="280" y2="350" stroke="#8a9aaa" stroke-width="2" marker-end="url(#arrow-al)" stroke-dasharray="4,3"/>
+  <text x="175" y="325" fill="#8a9aaa" font-size="9">Al pellets</text>
+
+  <!-- ═══ STAGE 2: WATER SYSTEM ═══ -->
+  <!-- Water tank -->
+  <rect x="40" y="360" width="80" height="60" rx="4" fill="#0e1a24" stroke="#3a6a8a" stroke-width="1.5"/>
+  <text x="80" y="385" fill="#3a6a8a" font-size="9" text-anchor="middle">WATER</text>
+  <text x="80" y="398" fill="#3a6a8a" font-size="9" text-anchor="middle">TANK</text>
+  <text x="80" y="411" fill="#7a7466" font-size="8" text-anchor="middle">25 L</text>
+  <!-- Pump symbol -->
+  <circle cx="160" cy="390" r="16" fill="#0e1a24" stroke="#3a6a8a" stroke-width="1.5"/>
+  <text x="160" y="394" fill="#3a6a8a" font-size="8" text-anchor="middle">PUMP</text>
+  <!-- Solenoid valve -->
+  <rect x="190" y="382" width="20" height="16" fill="#0e1a24" stroke="#3a6a8a" stroke-width="1.5"/>
+  <line x1="200" y1="372" x2="200" y2="382" stroke="#3a6a8a" stroke-width="1"/>
+  <text x="200" y="370" fill="#7a7466" font-size="7" text-anchor="middle">SV</text>
+  <!-- Lines -->
+  <line x1="120" y1="390" x2="144" y2="390" stroke="#3a6a8a" stroke-width="2"/>
+  <line x1="176" y1="390" x2="190" y2="390" stroke="#3a6a8a" stroke-width="2"/>
+  <!-- Filter -->
+  <rect x="215" y="382" width="20" height="16" fill="#0e1a24" stroke="#6a8aaa" stroke-width="1"/>
+  <text x="225" y="393" fill="#7a7466" font-size="7" text-anchor="middle">5μm</text>
+  <line x1="210" y1="390" x2="215" y2="390" stroke="#3a6a8a" stroke-width="1.5"/>
+  <!-- Water flow to chamber -->
+  <line x1="235" y1="390" x2="280" y2="390" stroke="#3a6a8a" stroke-width="2" marker-end="url(#arrow-water)"/>
+  <text x="252" y="385" fill="#3a6a8a" font-size="9">H₂O in</text>
+  <!-- Label -->
+  <text x="80" y="435" fill="#c8c2b6" font-size="9" text-anchor="middle" letter-spacing="1">② WATER SYS</text>
+
+  <!-- ═══ CATALYST SYSTEM ═══ -->
+  <circle cx="80" cy="520" r="28" fill="#0e1a24" stroke="#b87333" stroke-width="1.5"/>
+  <text x="80" y="515" fill="#b87333" font-size="9" text-anchor="middle">IMIDAZOLE</text>
+  <text x="80" y="527" fill="#7a7466" font-size="8" text-anchor="middle">1–5 mM</text>
+  <line x1="80" y1="492" x2="80" y2="462" stroke="#b87333" stroke-width="1.5"/>
+  <!-- Inject to chamber -->
+  <line x1="108" y1="520" x2="280" y2="440" stroke="#b87333" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow-ember)"/>
+  <text x="190" y="500" fill="#b87333" font-size="8">catalyst</text>
+  <text x="80" y="560" fill="#c8c2b6" font-size="9" text-anchor="middle" letter-spacing="1">③ CATALYST</text>
+
+  <!-- ═══ STAGE 3: REACTION CHAMBER ═══ -->
+  <rect x="280" y="300" width="200" height="200" rx="8" fill="#120e0a" stroke="#c45a2d" stroke-width="2"/>
+  <!-- Chamber label -->
+  <text x="380" y="330" fill="#c8c2b6" font-size="12" text-anchor="middle" font-weight="bold">REACTION</text>
+  <text x="380" y="347" fill="#c8c2b6" font-size="12" text-anchor="middle" font-weight="bold">CHAMBER</text>
+  <!-- Reaction equation -->
+  <text x="380" y="375" fill="#38b6a0" font-size="9" text-anchor="middle">2Al + 6H₂O →</text>
+  <text x="380" y="390" fill="#38b6a0" font-size="9" text-anchor="middle">2Al(OH)₃ + 3H₂↑</text>
+  <text x="380" y="408" fill="#c45a2d" font-size="9" text-anchor="middle">+ ΔH (−418 kJ/mol)</text>
+  <!-- Specs -->
+  <text x="380" y="430" fill="#7a7466" font-size="8" text-anchor="middle">12 L  ·  50°C opt  ·  1.2 bar</text>
+  <text x="380" y="445" fill="#7a7466" font-size="8" text-anchor="middle">5 min cycle  ·  96% yield</text>
+  <!-- PRV -->
+  <circle cx="480" cy="340" r="10" fill="#0e0e0e" stroke="#c45a2d" stroke-width="1.5"/>
+  <text x="480" y="344" fill="#c45a2d" font-size="7" text-anchor="middle">PRV</text>
+  <text x="492" y="344" fill="#7a7466" font-size="7">2.5b</text>
+  <!-- Flanges (dashes on top and bottom) -->
+  <rect x="278" y="295" width="204" height="8" fill="none" stroke="#6a4a3a" stroke-width="1" stroke-dasharray="6,4"/>
+  <rect x="278" y="497" width="204" height="8" fill="none" stroke="#6a4a3a" stroke-width="1" stroke-dasharray="6,4"/>
+  <!-- Label -->
+  <text x="380" y="520" fill="#c8c2b6" font-size="9" text-anchor="middle" letter-spacing="1">③ REACTION CHAMBER</text>
+
+  <!-- ═══ STAGE 4: H₂ SEPARATOR ═══ -->
+  <!-- Pipe from chamber top to separator -->
+  <line x1="380" y1="300" x2="380" y2="260" stroke="#1d6b5e" stroke-width="3"/>
+  <line x1="380" y1="260" x2="530" y2="260" stroke="#1d6b5e" stroke-width="3" marker-end="url(#arrow)"/>
+  <!-- Separator body -->
+  <rect x="530" y="220" width="120" height="120" rx="6" fill="#0a1e1a" stroke="#38b6a0" stroke-width="2"/>
+  <text x="590" y="255" fill="#38b6a0" font-size="11" text-anchor="middle" font-weight="bold">H₂</text>
+  <text x="590" y="270" fill="#38b6a0" font-size="11" text-anchor="middle" font-weight="bold">SEPARATOR</text>
+  <text x="590" y="290" fill="#7a7466" font-size="8" text-anchor="middle">Membrane</text>
+  <text x="590" y="303" fill="#7a7466" font-size="8" text-anchor="middle">&gt;99.9% H₂</text>
+  <text x="590" y="318" fill="#7a7466" font-size="8" text-anchor="middle">&gt;99% recovery</text>
+  <!-- Label -->
+  <text x="590" y="358" fill="#c8c2b6" font-size="9" text-anchor="middle" letter-spacing="1">④ H₂ SEPARATOR</text>
+
+  <!-- H₂ flow label on pipe -->
+  <text x="455" y="250" fill="#38b6a0" font-size="9">H₂ (low P)</text>
+
+  <!-- ═══ STAGE 5: PEM FUEL CELL ═══ -->
+  <!-- Pipe from separator to fuel cell -->
+  <line x1="650" y1="280" x2="750" y2="280" stroke="#1d6b5e" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="695" y="272" fill="#38b6a0" font-size="9" text-anchor="middle">H₂ feed</text>
+  <!-- Air intake arrow -->
+  <line x1="820" y1="200" x2="820" y2="260" stroke="#6a7a8a" stroke-width="2" marker-end="url(#arrow-water)"/>
+  <text x="845" y="230" fill="#6a7a8a" font-size="9">Air in</text>
+  <!-- FC body -->
+  <rect x="750" y="260" width="160" height="120" rx="4" fill="#0a0a10" stroke="#38b6a0" stroke-width="2"/>
+  <!-- FC plates visual -->
+  <line x1="750" y1="280" x2="910" y2="280" stroke="#2a2d30" stroke-width="1"/>
+  <line x1="750" y1="296" x2="910" y2="296" stroke="#2a2d30" stroke-width="1"/>
+  <line x1="750" y1="312" x2="910" y2="312" stroke="#2a2d30" stroke-width="1"/>
+  <line x1="750" y1="328" x2="910" y2="328" stroke="#2a2d30" stroke-width="1"/>
+  <line x1="750" y1="344" x2="910" y2="344" stroke="#2a2d30" stroke-width="1"/>
+  <text x="830" y="305" fill="#c8c2b6" font-size="12" text-anchor="middle" font-weight="bold">PEM STACK</text>
+  <text x="830" y="322" fill="#38b6a0" font-size="9" text-anchor="middle">30 kW / 60–65%</text>
+  <text x="830" y="337" fill="#7a7466" font-size="8" text-anchor="middle">2H₂ + O₂ → 2H₂O + e⁻</text>
+  <text x="830" y="352" fill="#7a7466" font-size="8" text-anchor="middle">Water vapor exhaust only</text>
+  <!-- DC output cables -->
+  <line x1="910" y1="300" x2="980" y2="300" stroke="#c45a2d" stroke-width="3" marker-end="url(#arrow-ember)"/>
+  <line x1="910" y1="340" x2="980" y2="340" stroke="#c45a2d" stroke-width="3" marker-end="url(#arrow-ember)"/>
+  <text x="945" y="295" fill="#c45a2d" font-size="9" text-anchor="middle">+ DC</text>
+  <text x="945" y="355" fill="#c45a2d" font-size="9" text-anchor="middle">− DC</text>
+  <!-- Motor block -->
+  <rect x="980" y="270" width="100" height="90" rx="4" fill="#0e0e0e" stroke="#c45a2d" stroke-width="1.5"/>
+  <text x="1030" y="305" fill="#c45a2d" font-size="11" text-anchor="middle" font-weight="bold">EV</text>
+  <text x="1030" y="320" fill="#c45a2d" font-size="11" text-anchor="middle" font-weight="bold">MOTOR</text>
+  <text x="1030" y="338" fill="#7a7466" font-size="8" text-anchor="middle">Standard BEV</text>
+  <text x="1030" y="350" fill="#7a7466" font-size="8" text-anchor="middle">drivetrain</text>
+  <!-- H2O exhaust -->
+  <line x1="830" y1="380" x2="830" y2="440" stroke="#3a6a8a" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <text x="855" y="415" fill="#3a6a8a" font-size="8">H₂O vapor</text>
+  <text x="855" y="428" fill="#3a6a8a" font-size="8">(exhaust)</text>
+  <!-- Label -->
+  <text x="830" y="460" fill="#c8c2b6" font-size="9" text-anchor="middle" letter-spacing="1">⑤ PEM FUEL CELL → EV MOTOR</text>
+
+  <!-- ═══ STAGE 6: BYPRODUCT RECOVERY ═══ -->
+  <!-- Slurry drain from chamber bottom -->
+  <line x1="380" y1="505" x2="380" y2="580" stroke="#aa6a3a" stroke-width="2.5" marker-end="url(#arrow-ember)"/>
+  <text x="395" y="545" fill="#aa6a3a" font-size="9">slurry</text>
+  <!-- Boehmite tank -->
+  <rect x="320" y="580" width="120" height="80" rx="4" fill="#1a0e08" stroke="#aa6a3a" stroke-width="2"/>
+  <text x="380" y="608" fill="#aa6a3a" font-size="10" text-anchor="middle" font-weight="bold">BOEHMITE</text>
+  <text x="380" y="622" fill="#aa6a3a" font-size="10" text-anchor="middle" font-weight="bold">TANK</text>
+  <text x="380" y="638" fill="#7a7466" font-size="8" text-anchor="middle">Al(OH)₃ / AlOOH</text>
+  <text x="380" y="650" fill="#7a7466" font-size="8" text-anchor="middle">80 kg / cartridge</text>
+  <!-- GaIn recovery loop -->
+  <path d="M 440 620 Q 500 620 500 550 Q 500 480 440 460 Q 420 455 400 460" fill="none" stroke="#8a9aaa" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="515" y="545" fill="#8a9aaa" font-size="8">GaIn</text>
+  <text x="515" y="558" fill="#8a9aaa" font-size="8">recovery</text>
+  <text x="515" y="571" fill="#8a9aaa" font-size="8">loop</text>
+  <polygon points="400,460 395,450 410,455" fill="#8a9aaa"/>
+  <!-- Boehmite sold -->
+  <line x1="380" y1="660" x2="380" y2="720" stroke="#aa6a3a" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <text x="395" y="685" fill="#aa6a3a" font-size="8">→ sold</text>
+  <text x="395" y="698" fill="#aa6a3a" font-size="8">~$40/tank</text>
+  <!-- Label -->
+  <text x="380" y="740" fill="#c8c2b6" font-size="9" text-anchor="middle" letter-spacing="1">⑥ BYPRODUCT RECOVERY</text>
+
+  <!-- ═══ LEGEND ═══ -->
+  <rect x="620" y="560" width="420" height="200" fill="none" stroke="#2a2d30" stroke-width="1"/>
+  <text x="640" y="580" fill="#7a7466" font-size="9" letter-spacing="2">LEGEND</text>
+  <!-- Flow lines -->
+  <line x1="640" y1="598" x2="680" y2="598" stroke="#8a9aaa" stroke-width="2" stroke-dasharray="4,3"/>
+  <text x="690" y="602" fill="#8a9aaa" font-size="9">Aluminum pellet flow</text>
+  <line x1="640" y1="618" x2="680" y2="618" stroke="#3a6a8a" stroke-width="2"/>
+  <text x="690" y="622" fill="#3a6a8a" font-size="9">Water flow</text>
+  <line x1="640" y1="638" x2="680" y2="638" stroke="#38b6a0" stroke-width="2"/>
+  <text x="690" y="642" fill="#38b6a0" font-size="9">Hydrogen gas (low pressure)</text>
+  <line x1="640" y1="658" x2="680" y2="658" stroke="#c45a2d" stroke-width="2"/>
+  <text x="690" y="662" fill="#c45a2d" font-size="9">Electrical power (DC)</text>
+  <line x1="640" y1="678" x2="680" y2="678" stroke="#aa6a3a" stroke-width="2"/>
+  <text x="690" y="682" fill="#aa6a3a" font-size="9">Boehmite slurry</text>
+  <line x1="640" y1="698" x2="680" y2="698" stroke="#b87333" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <text x="690" y="702" fill="#b87333" font-size="9">Catalyst (imidazole) injection</text>
+  <line x1="640" y1="718" x2="680" y2="718" stroke="#8a9aaa" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="690" y="722" fill="#8a9aaa" font-size="9">GaIn alloy recovery loop</text>
+  <!-- Safety note -->
+  <text x="640" y="748" fill="#c45a2d" font-size="8">⚠ PRV: 2.5 bar relief  ·  H₂ sensors in engine bay (LEL)</text>
+
+  <!-- ═══ NOTES BLOCK ═══ -->
+  <rect x="20" y="810" width="1160" height="70" fill="none" stroke="#2a2d30" stroke-width="1"/>
+  <text x="40" y="830" fill="#7a7466" font-size="9" letter-spacing="1">NOTES:</text>
+  <text x="40" y="847" fill="#7a7466" font-size="8">1. All pressures near-ambient. No compressed H₂ storage. H₂ generated on-demand only.</text>
+  <text x="40" y="861" fill="#7a7466" font-size="8">2. System shuts down within 5 sec of water valve closure. Crash G-sensor triggers emergency stop at &gt;8g.</text>
+  <text x="40" y="875" fill="#7a7466" font-size="8">3. Chemistry source: MIT DMSE, Uddin et al. 2023. Imidazole catalyst: 24× acceleration, 96% H₂ yield.</text>
+  <text x="620" y="847" fill="#7a7466" font-size="8">4. Stoichiometry: 2Al + 6H₂O → 2Al(OH)₃ + 3H₂ · 0.1121 kg H₂ per kg Al · ΔH = −418 kJ/mol Al</text>
+  <text x="620" y="861" fill="#7a7466" font-size="8">5. Boehmite byproduct (semiconductor grade) has positive market value — offsets fuel cost.</text>
+  <text x="620" y="875" fill="#7a7466" font-size="8">6. GaIn alloy recovered via salt-ion precipitation. Seawater feedstock preferred over freshwater.</text>
+
+</svg>

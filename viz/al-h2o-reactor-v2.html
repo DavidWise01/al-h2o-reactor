@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AL-H₂O REACTOR // On-Board Hydrogen Generation System</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500&family=Playfair+Display:wght@400;500;600&display=swap');
+
+  :root {
+    --void: #080808;
+    --void-up: #0e0e0e;
+    --steel: #1a1d20;
+    --steel-light: #2a2d30;
+    --earth: #2d2b26;
+    --earth-mid: #4a4639;
+    --bone: #c8bfa8;
+    --bone-dim: #7a7466;
+    --ember: #c45a2d;
+    --ember-glow: #e87a3a;
+    --h2: #38b6a0;
+    --h2-dim: #1d6b5e;
+    --al: #8a9aaa;
+    --water: #3a6a8a;
+    --water-light: #4a8aaa;
+    --o2: #aa6a3a;
+    --heat: #aa3a2a;
+    --text: #8a8478;
+    --text-bright: #c8c2b6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  #canvas3d {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+  }
+
+  /* ─── UI OVERLAY ─── */
+  .ui {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 320px 1fr 320px;
+  }
+
+  @media (max-width: 1000px) {
+    .ui { grid-template-columns: 1fr; }
+    .sidebar-left, .sidebar-right { display: none !important; }
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    grid-column: 1 / -1;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background: linear-gradient(180deg, rgba(8,8,8,0.95) 0%, transparent 100%);
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--text-bright);
+    letter-spacing: 0.03em;
+  }
+
+  .header h1 span { color: var(--h2); }
+
+  .header .sub {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--bone-dim);
+    margin-top: 4px;
+  }
+
+  .header .controls {
+    display: flex;
+    gap: 6px;
+    pointer-events: all;
+  }
+
+  .ctrl-btn {
+    background: rgba(42,45,48,0.8);
+    border: 1px solid var(--steel-light);
+    color: var(--bone-dim);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 2px;
+    backdrop-filter: blur(10px);
+  }
+
+  .ctrl-btn:hover { border-color: var(--h2); color: var(--h2); }
+  .ctrl-btn.active { border-color: var(--ember); color: var(--ember); background: rgba(196,90,45,0.08); }
+
+  /* ─── SIDEBARS ─── */
+  .sidebar-left, .sidebar-right {
+    pointer-events: all;
+    overflow-y: auto;
+    padding: 0 16px 16px;
+  }
+
+  .sidebar-left::-webkit-scrollbar, .sidebar-right::-webkit-scrollbar { width: 3px; }
+  .sidebar-left::-webkit-scrollbar-thumb, .sidebar-right::-webkit-scrollbar-thumb { background: var(--steel-light); }
+
+  /* ─── PANELS ─── */
+  .panel {
+    background: rgba(14,14,14,0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(42,45,48,0.6);
+    border-radius: 3px;
+    padding: 14px;
+    margin-bottom: 10px;
+  }
+
+  .panel-label {
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--bone-dim);
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .panel-label .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--bone-dim);
+    transition: all 0.5s;
+  }
+
+  .panel-label .dot.on { background: var(--h2); box-shadow: 0 0 6px var(--h2-dim); }
+
+  /* ─── STEP BUTTONS ─── */
+  .step-btn {
+    width: 100%;
+    background: rgba(26,29,32,0.9);
+    border: 1px solid var(--steel-light);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: left;
+    border-radius: 2px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .step-btn:hover { border-color: var(--bone-dim); color: var(--text-bright); }
+  .step-btn.active { border-color: var(--h2); color: var(--h2); background: rgba(56,182,160,0.04); }
+
+  .step-num {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 1px solid var(--steel-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.55rem;
+    flex-shrink: 0;
+    transition: all 0.3s;
+  }
+
+  .step-btn.active .step-num { border-color: var(--h2); color: var(--h2); }
+
+  /* ─── EXPLAINER ─── */
+  .explainer {
+    font-size: 0.65rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .explainer .highlight { color: var(--h2); font-weight: 500; }
+  .explainer .ember { color: var(--ember); font-weight: 500; }
+  .explainer .al { color: var(--al); font-weight: 500; }
+  .explainer .water { color: var(--water-light); font-weight: 500; }
+
+  /* ─── SPECS ─── */
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(42,45,48,0.3);
+    font-size: 0.6rem;
+  }
+
+  .spec-row:last-child { border-bottom: none; }
+  .spec-row .val { color: var(--text-bright); font-weight: 500; }
+  .spec-row .val.h2 { color: var(--h2); }
+  .spec-row .val.ember { color: var(--ember); }
+
+  /* ─── FLOW INDICATOR ─── */
+  .flow-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .flow-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.55rem;
+  }
+
+  .flow-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    grid-column: 1 / -1;
+    padding: 12px 24px;
+    text-align: center;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    color: var(--bone-dim);
+    background: linear-gradient(0deg, rgba(8,8,8,0.95) 0%, transparent 100%);
+  }
+
+  /* ─── TOOLTIP ─── */
+  #tooltip {
+    position: fixed;
+    display: none;
+    background: rgba(14,14,14,0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--steel-light);
+    padding: 8px 12px;
+    border-radius: 3px;
+    font-size: 0.6rem;
+    color: var(--text-bright);
+    pointer-events: none;
+    z-index: 100;
+    max-width: 200px;
+  }
+
+  #tooltip .tt-label { color: var(--h2); font-weight: 500; margin-bottom: 3px; }
+</style>
+</head>
+<body>
+
+<canvas id="canvas3d"></canvas>
+
+<div class="ui">
+  <div class="header">
+    <div>
+      <h1>AL-H₂O <span>Reactor</span></h1>
+      <div class="sub">ON-BOARD HYDROGEN GENERATION // PASSENGER VEHICLE INTEGRATION</div>
+    </div>
+    <div class="controls">
+      <button class="ctrl-btn" onclick="toggleCutaway()" id="cutawayBtn">CUTAWAY</button>
+      <button class="ctrl-btn" onclick="toggleFlow()" id="flowBtn">FLOW</button>
+      <button class="ctrl-btn" onclick="toggleSpin()" id="spinBtn">AUTO-ROTATE</button>
+      <button class="ctrl-btn" onclick="resetView()">RESET</button>
+    </div>
+  </div>
+
+  <div class="sidebar-left">
+    <div class="panel">
+      <div class="panel-label">REACTOR STAGES <div class="dot on" id="stageDot"></div></div>
+      <button class="step-btn active" onclick="setStep(0)" id="step0">
+        <div class="step-num">1</div>
+        <div>ALUMINUM PELLET FEED</div>
+      </button>
+      <button class="step-btn" onclick="setStep(1)" id="step1">
+        <div class="step-num">2</div>
+        <div>SEAWATER INJECTION</div>
+      </button>
+      <button class="step-btn" onclick="setStep(2)" id="step2">
+        <div class="step-num">3</div>
+        <div>CATALYTIC REACTION</div>
+      </button>
+      <button class="step-btn" onclick="setStep(3)" id="step3">
+        <div class="step-num">4</div>
+        <div>H₂ SEPARATION</div>
+      </button>
+      <button class="step-btn" onclick="setStep(4)" id="step4">
+        <div class="step-num">5</div>
+        <div>FUEL CELL CONVERSION</div>
+      </button>
+      <button class="step-btn" onclick="setStep(5)" id="step5">
+        <div class="step-num">6</div>
+        <div>BYPRODUCT RECOVERY</div>
+      </button>
+    </div>
+
+    <div class="panel">
+      <div class="panel-label">FLOW LEGEND</div>
+      <div class="flow-legend">
+        <div class="flow-item"><div class="flow-dot" style="background:#8a9aaa"></div> Al Pellets</div>
+        <div class="flow-item"><div class="flow-dot" style="background:#3a6a8a"></div> Seawater</div>
+        <div class="flow-item"><div class="flow-dot" style="background:#38b6a0"></div> Hydrogen</div>
+        <div class="flow-item"><div class="flow-dot" style="background:#aa6a3a"></div> Boehmite</div>
+        <div class="flow-item"><div class="flow-dot" style="background:#c45a2d"></div> Electricity</div>
+        <div class="flow-item"><div class="flow-dot" style="background:#6a8aaa"></div> Water Out</div>
+      </div>
+    </div>
+  </div>
+
+  <div></div>
+
+  <div class="sidebar-right">
+    <div class="panel" id="explainerPanel">
+      <div class="panel-label">HOW IT WORKS</div>
+      <div class="explainer" id="explainerText">
+        <strong>Stage 1: Aluminum Pellet Feed</strong><br><br>
+        Recycled aluminum (soda cans, scrap) is shredded into <span class="al">pebble-sized pellets</span> and pre-treated with a thin coating of <span class="highlight">gallium-indium alloy</span>. This alloy strips the natural oxide layer that normally prevents aluminum from reacting with water.<br><br>
+        The pellets are stored in a <span class="ember">hopper magazine</span> — a sealed, gravity-fed cartridge that can be swapped at fuel stations like a propane tank. No volatile gases. No cryogenic storage. Just metal pellets at room temperature.<br><br>
+        A motorized auger feeds pellets into the reaction chamber at a rate controlled by the vehicle's power demand. More throttle = more pellets = more hydrogen.
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-label">LIVE THERMODYNAMICS <div class="dot on"></div></div>
+      <div style="margin-bottom:8px;">
+        <div class="spec-row"><span>Al Feed (kg/hr)</span><span class="val" id="alFeedDisp">10</span></div>
+        <input type="range" id="alFeed" min="1" max="50" value="10" step="0.5" style="width:100%;accent-color:#c45a2d;height:16px;margin:4px 0">
+      </div>
+      <div style="margin-bottom:8px;">
+        <div class="spec-row"><span>Water Temp (°C)</span><span class="val" id="waterTempDisp">25</span></div>
+        <input type="range" id="waterTemp" min="5" max="60" value="25" step="1" style="width:100%;accent-color:#3a6a8a;height:16px;margin:4px 0">
+      </div>
+      <div style="margin-bottom:8px;">
+        <div class="spec-row"><span>PEM Stack Eff (%)</span><span class="val" id="pemEffDisp">62</span></div>
+        <input type="range" id="pemEff" min="45" max="72" value="62" step="1" style="width:100%;accent-color:#38b6a0;height:16px;margin:4px 0">
+      </div>
+      <hr style="border-color:#2a2d30;margin:10px 0">
+      <div class="panel-label" style="margin-bottom:6px">CALCULATED OUTPUT</div>
+      <!-- Reaction: 2Al + 6H₂O → 2Al(OH)₃ + 3H₂ -->
+      <!-- Al molar mass: 26.98 g/mol, H₂: 2.016 g/mol -->
+      <!-- 2 mol Al → 3 mol H₂, so 1 kg Al → (3/2)*(2.016/26.98) = 0.1121 kg H₂ -->
+      <!-- ΔH = -418 kJ/mol Al (exothermic) -->
+      <!-- H₂ HHV = 141.8 MJ/kg, LHV = 120 MJ/kg -->
+      <div class="spec-row"><span>H₂ Produced</span><span class="val h2" id="calcH2">1.12 kg/hr</span></div>
+      <div class="spec-row"><span>H₂ Energy (LHV)</span><span class="val h2" id="calcH2E">134.4 MJ/hr</span></div>
+      <div class="spec-row"><span>Electrical Output</span><span class="val h2" id="calcElec">23.1 kW</span></div>
+      <div class="spec-row"><span>Reaction Heat</span><span class="val ember" id="calcHeat">77.5 kW</span></div>
+      <div class="spec-row"><span>Boehmite Yield</span><span class="val" id="calcBoeh">17.4 kg/hr</span></div>
+      <div class="spec-row"><span>Water Consumed</span><span class="val" id="calcWater">20.0 L/hr</span></div>
+      <div class="spec-row"><span>Chain Efficiency</span><span class="val ember" id="calcChain">61.8%</span></div>
+      <div class="spec-row"><span>Range @ 15kW avg</span><span class="val h2" id="calcRange">~412 km</span></div>
+      <div class="spec-row"><span>Catalyst</span><span class="val">Imidazole + GaIn</span></div>
+      <div class="spec-row"><span>GaIn Recovery</span><span class="val h2">Yes (salt ions)</span></div>
+    </div>
+  </div>
+
+  <div class="footer">TRIPOD SYSTEMS // Anchor × Bubble × Gravity Well // World = Family // Engineering Gap = Product</div>
+</div>
+
+<div id="tooltip"><div class="tt-label"></div><div class="tt-body"></div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ═══ SCENE SETUP ═══
+const canvas = document.getElementById('canvas3d');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+renderer.outputEncoding = THREE.sRGBEncoding;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x080808);
+scene.fog = new THREE.FogExp2(0x080808, 0.015);
+
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 200);
+camera.position.set(8, 5, 10);
+camera.lookAt(0, 0, 0);
+
+// ═══ LIGHTING — STUDIO SETUP ═══
+const ambient = new THREE.AmbientLight(0x1a1a1a, 0.3);
+scene.add(ambient);
+
+const keyLight = new THREE.DirectionalLight(0xffeedd, 0.9);
+keyLight.position.set(5, 8, 6);
+keyLight.castShadow = true;
+keyLight.shadow.mapSize.set(2048, 2048);
+keyLight.shadow.camera.near = 0.1;
+keyLight.shadow.camera.far = 30;
+keyLight.shadow.camera.left = -10;
+keyLight.shadow.camera.right = 10;
+keyLight.shadow.camera.top = 10;
+keyLight.shadow.camera.bottom = -10;
+keyLight.shadow.bias = -0.001;
+scene.add(keyLight);
+
+const fillLight = new THREE.DirectionalLight(0x8aaacc, 0.3);
+fillLight.position.set(-4, 3, -3);
+scene.add(fillLight);
+
+const rimLight = new THREE.DirectionalLight(0xc45a2d, 0.4);
+rimLight.position.set(-2, 6, -8);
+scene.add(rimLight);
+
+const h2Glow = new THREE.PointLight(0x38b6a0, 0, 8);
+h2Glow.position.set(3, 1, 0);
+scene.add(h2Glow);
+
+// ═══ GROUND PLANE ═══
+const groundGeo = new THREE.PlaneGeometry(60, 60);
+const groundMat = new THREE.MeshStandardMaterial({
+  color: 0x0a0a0a, roughness: 0.95, metalness: 0.0
+});
+const ground = new THREE.Mesh(groundGeo, groundMat);
+ground.rotation.x = -Math.PI / 2;
+ground.position.y = -2.5;
+ground.receiveShadow = true;
+scene.add(ground);
+
+// ═══ MATERIALS ═══
+const matSteel = new THREE.MeshStandardMaterial({
+  color: 0x3a3d40, roughness: 0.25, metalness: 0.85
+});
+const matSteelDark = new THREE.MeshStandardMaterial({
+  color: 0x22252a, roughness: 0.3, metalness: 0.9
+});
+const matAluminum = new THREE.MeshStandardMaterial({
+  color: 0x8a9aaa, roughness: 0.2, metalness: 0.95
+});
+const matCopper = new THREE.MeshStandardMaterial({
+  color: 0xb87333, roughness: 0.3, metalness: 0.85
+});
+const matReactionChamber = new THREE.MeshStandardMaterial({
+  color: 0x2a2520, roughness: 0.4, metalness: 0.6,
+});
+const matGlass = new THREE.MeshPhysicalMaterial({
+  color: 0x4a8aaa, roughness: 0.05, metalness: 0.0,
+  transparent: true, opacity: 0.25, transmission: 0.6,
+});
+const matH2Pipe = new THREE.MeshStandardMaterial({
+  color: 0x1d6b5e, roughness: 0.3, metalness: 0.7,
+  emissive: 0x0a2a22, emissiveIntensity: 0.2
+});
+const matFuelCell = new THREE.MeshStandardMaterial({
+  color: 0x1a1a1a, roughness: 0.15, metalness: 0.9
+});
+const matEmber = new THREE.MeshStandardMaterial({
+  color: 0xc45a2d, roughness: 0.4, metalness: 0.3,
+  emissive: 0x5a2010, emissiveIntensity: 0.3
+});
+const matByproduct = new THREE.MeshStandardMaterial({
+  color: 0xaa6a3a, roughness: 0.6, metalness: 0.2
+});
+
+// ═══ REACTOR COMPONENTS ═══
+const reactor = new THREE.Group();
+scene.add(reactor);
+
+// Component registry for tooltips
+const components = [];
+function registerComponent(mesh, name, desc) {
+  mesh.userData = { name, desc };
+  components.push(mesh);
+}
+
+// 1. HOPPER (Al pellet magazine) — top cylinder
+const hopperGeo = new THREE.CylinderGeometry(0.8, 0.7, 2.2, 24, 1);
+const hopper = new THREE.Mesh(hopperGeo, matAluminum);
+hopper.position.set(-3, 1.5, 0);
+hopper.castShadow = true;
+reactor.add(hopper);
+registerComponent(hopper, "PELLET HOPPER", "Sealed magazine holds 36kg recycled Al pellets. Swap-cartridge design. Room temp storage.");
+
+// Hopper cap
+const capGeo = new THREE.CylinderGeometry(0.85, 0.85, 0.15, 24);
+const cap = new THREE.Mesh(capGeo, matSteelDark);
+cap.position.set(-3, 2.65, 0);
+cap.castShadow = true;
+reactor.add(cap);
+
+// Hopper feed tube
+const feedGeo = new THREE.CylinderGeometry(0.15, 0.15, 1.2, 12);
+const feed = new THREE.Mesh(feedGeo, matSteel);
+feed.position.set(-3, -0.2, 0);
+feed.castShadow = true;
+reactor.add(feed);
+registerComponent(feed, "AUGER FEED", "Motorized auger meters pellet flow. Rate = f(throttle demand). Variable H₂ output.");
+
+// 2. REACTION CHAMBER — main body
+const chamberGeo = new THREE.CylinderGeometry(1.2, 1.2, 2.4, 32, 1);
+const chamber = new THREE.Mesh(chamberGeo, matReactionChamber);
+chamber.position.set(0, 0, 0);
+chamber.castShadow = true;
+reactor.add(chamber);
+registerComponent(chamber, "REACTION CHAMBER", "Al + H₂O + imidazole catalyst → H₂ + Al(OH)₃. Exothermic. 5-min cycle. 96% yield.");
+
+// Chamber glass viewport
+const viewGeo = new THREE.CylinderGeometry(1.22, 1.22, 0.8, 32, 1, true, 0, Math.PI * 0.4);
+const viewport = new THREE.Mesh(viewGeo, matGlass);
+viewport.position.set(0, 0.3, 0);
+reactor.add(viewport);
+
+// Chamber flanges (top and bottom)
+for (let y of [1.25, -1.25]) {
+  const flangeGeo = new THREE.CylinderGeometry(1.4, 1.4, 0.12, 32);
+  const flange = new THREE.Mesh(flangeGeo, matSteelDark);
+  flange.position.set(0, y, 0);
+  flange.castShadow = true;
+  reactor.add(flange);
+
+  // Bolts
+  for (let i = 0; i < 8; i++) {
+    const angle = (i / 8) * Math.PI * 2;
+    const boltGeo = new THREE.CylinderGeometry(0.05, 0.05, 0.16, 8);
+    const bolt = new THREE.Mesh(boltGeo, matSteel);
+    bolt.position.set(Math.cos(angle) * 1.28, y, Math.sin(angle) * 1.28);
+    reactor.add(bolt);
+  }
+}
+
+// 3. SEAWATER INLET — pipe from side
+const inletGeo = new THREE.CylinderGeometry(0.12, 0.12, 2, 12);
+const inlet = new THREE.Mesh(inletGeo, matSteel);
+inlet.rotation.z = Math.PI / 2;
+inlet.position.set(-1.5, 0.5, 0.8);
+inlet.castShadow = true;
+reactor.add(inlet);
+registerComponent(inlet, "SEAWATER INLET", "Filtered seawater pumped from onboard tank or ambient intake (marine). No freshwater needed.");
+
+// Inlet valve
+const valveGeo = new THREE.SphereGeometry(0.18, 16, 16);
+const valve = new THREE.Mesh(valveGeo, matCopper);
+valve.position.set(-2.2, 0.5, 0.8);
+reactor.add(valve);
+
+// 4. H₂ SEPARATOR — smaller cylinder on top
+const sepGeo = new THREE.CylinderGeometry(0.6, 0.7, 1.5, 24, 1);
+const separator = new THREE.Mesh(sepGeo, matSteel);
+separator.position.set(0, 2.3, 0);
+separator.castShadow = true;
+reactor.add(separator);
+registerComponent(separator, "H₂ SEPARATOR", "Membrane separates H₂ gas from reaction slurry. Pure hydrogen rises, boehmite settles.");
+
+// Separator cap with H2 outlet
+const sepCapGeo = new THREE.CylinderGeometry(0.65, 0.65, 0.1, 24);
+const sepCap = new THREE.Mesh(sepCapGeo, matSteelDark);
+sepCap.position.set(0, 3.1, 0);
+reactor.add(sepCap);
+
+// 5. H₂ DELIVERY PIPE — to fuel cell
+const h2PipePoints = [
+  new THREE.Vector3(0, 3.15, 0),
+  new THREE.Vector3(0.5, 3.5, 0),
+  new THREE.Vector3(2, 3.5, 0),
+  new THREE.Vector3(3, 3.0, 0),
+  new THREE.Vector3(3.5, 2.0, 0),
+  new THREE.Vector3(3.5, 1.0, 0),
+];
+const h2Curve = new THREE.CatmullRomCurve3(h2PipePoints);
+const h2PipeGeo = new THREE.TubeGeometry(h2Curve, 40, 0.1, 12, false);
+const h2Pipe = new THREE.Mesh(h2PipeGeo, matH2Pipe);
+h2Pipe.castShadow = true;
+reactor.add(h2Pipe);
+registerComponent(h2Pipe, "H₂ DELIVERY", "Low-pressure hydrogen pipe to fuel cell. No compressed storage needed — generated on demand.");
+
+// 6. FUEL CELL STACK
+const fcGroup = new THREE.Group();
+fcGroup.position.set(3.5, -0.2, 0);
+reactor.add(fcGroup);
+
+// Stack plates
+for (let i = 0; i < 8; i++) {
+  const plateGeo = new THREE.BoxGeometry(1.6, 0.12, 1.2);
+  const plate = new THREE.Mesh(plateGeo, i % 2 === 0 ? matFuelCell : matSteelDark);
+  plate.position.y = i * 0.14 - 0.5;
+  plate.castShadow = true;
+  fcGroup.add(plate);
+}
+
+// FC housing
+const fcHouseGeo = new THREE.BoxGeometry(1.8, 1.4, 1.4);
+const fcHouseEdges = new THREE.EdgesGeometry(fcHouseGeo);
+const fcWire = new THREE.LineSegments(fcHouseEdges, new THREE.LineBasicMaterial({ color: 0x38b6a0, transparent: true, opacity: 0.3 }));
+fcWire.position.y = 0.05;
+fcGroup.add(fcWire);
+registerComponent(fcWire, "PEM FUEL CELL", "H₂ + O₂ → electricity + H₂O. 60-65% efficient. Powers electric motor. Water exhaust only.");
+
+// Electrical output cables
+for (let z of [-0.5, 0.5]) {
+  const cableGeo = new THREE.CylinderGeometry(0.06, 0.06, 1.5, 8);
+  const cable = new THREE.Mesh(cableGeo, matEmber);
+  cable.position.set(1.2, 0, z);
+  cable.rotation.z = Math.PI / 2;
+  fcGroup.add(cable);
+}
+registerComponent(fcGroup.children[fcGroup.children.length - 1], "POWER OUTPUT", "DC electricity to motor controller. Same drivetrain as any EV. 100% compatible.");
+
+// 7. BYPRODUCT OUTLET — bottom of chamber
+const byproductPipeGeo = new THREE.CylinderGeometry(0.15, 0.15, 1.5, 12);
+const byproductPipe = new THREE.Mesh(byproductPipeGeo, matByproduct);
+byproductPipe.position.set(0.8, -2.0, 0);
+byproductPipe.rotation.z = 0.3;
+byproductPipe.castShadow = true;
+reactor.add(byproductPipe);
+registerComponent(byproductPipe, "BOEHMITE OUTPUT", "Al(OH)₃ (boehmite) collected for recycling. Used in semiconductors. Revenue offset. GaIn alloy recovered.");
+
+// Byproduct collection tank
+const tankGeo = new THREE.CylinderGeometry(0.5, 0.5, 1.0, 16);
+const tank = new THREE.Mesh(tankGeo, matSteelDark);
+tank.position.set(1.5, -2.5, 0);
+tank.castShadow = true;
+reactor.add(tank);
+registerComponent(tank, "COLLECTION TANK", "Swappable tank collects boehmite + recoverable GaIn alloy. Exchange at fuel station with pellet cartridge.");
+
+// 8. CATALYST INJECTOR
+const catGeo = new THREE.CylinderGeometry(0.1, 0.1, 0.8, 8);
+const catInj = new THREE.Mesh(catGeo, matCopper);
+catInj.position.set(-0.6, 0, 1.2);
+catInj.rotation.x = Math.PI / 2;
+reactor.add(catInj);
+registerComponent(catInj, "CATALYST INJECTOR", "Imidazole (caffeine compound) injection. Accelerates seawater reaction 24x. Trace amounts, low cost.");
+
+// Small catalyst reservoir
+const catResGeo = new THREE.SphereGeometry(0.2, 12, 12);
+const catRes = new THREE.Mesh(catResGeo, matCopper);
+catRes.position.set(-0.6, 0, 1.7);
+reactor.add(catRes);
+
+// ═══ FLOW PARTICLES ═══
+let flowParticles = [];
+let showFlow = false;
+
+function createFlowParticle(type) {
+  const colors = {
+    al: 0x8a9aaa, water: 0x3a6a8a, h2: 0x38b6a0, byproduct: 0xaa6a3a, electric: 0xc45a2d
+  };
+  const geo = new THREE.SphereGeometry(type === 'al' ? 0.06 : 0.04, 6, 6);
+  const mat = new THREE.MeshBasicMaterial({ color: colors[type] });
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.userData.flowType = type;
+  mesh.userData.t = 0;
+  mesh.userData.speed = 0.003 + Math.random() * 0.004;
+  return mesh;
+}
+
+const flowPaths = {
+  al: [
+    new THREE.Vector3(-3, 2.5, 0), new THREE.Vector3(-3, 0.5, 0),
+    new THREE.Vector3(-2, -0.3, 0), new THREE.Vector3(-0.5, -0.3, 0), new THREE.Vector3(0, 0, 0)
+  ],
+  water: [
+    new THREE.Vector3(-3, 0.5, 0.8), new THREE.Vector3(-2, 0.5, 0.8),
+    new THREE.Vector3(-0.5, 0.3, 0.4), new THREE.Vector3(0, 0, 0)
+  ],
+  h2: h2PipePoints,
+  byproduct: [
+    new THREE.Vector3(0, -0.5, 0), new THREE.Vector3(0.4, -1.2, 0),
+    new THREE.Vector3(0.8, -1.8, 0), new THREE.Vector3(1.5, -2.5, 0)
+  ],
+  electric: [
+    new THREE.Vector3(3.5, 0, -0.5), new THREE.Vector3(4.7, 0, -0.5),
+    new THREE.Vector3(5.5, 0, -0.5), new THREE.Vector3(6.5, 0, -0.5)
+  ]
+};
+
+const flowCurves = {};
+for (const [k, pts] of Object.entries(flowPaths)) {
+  flowCurves[k] = new THREE.CatmullRomCurve3(pts);
+}
+
+function spawnFlowParticles() {
+  if (!showFlow) return;
+  const types = ['al', 'water', 'h2', 'byproduct', 'electric'];
+  for (const type of types) {
+    if (Math.random() < 0.08) {
+      const p = createFlowParticle(type);
+      const pos = flowCurves[type].getPoint(0);
+      p.position.copy(pos);
+      scene.add(p);
+      flowParticles.push(p);
+    }
+  }
+}
+
+function updateFlowParticles() {
+  for (let i = flowParticles.length - 1; i >= 0; i--) {
+    const p = flowParticles[i];
+    p.userData.t += p.userData.speed;
+    if (p.userData.t >= 1) {
+      scene.remove(p);
+      flowParticles.splice(i, 1);
+      continue;
+    }
+    const curve = flowCurves[p.userData.flowType];
+    const pos = curve.getPoint(p.userData.t);
+    p.position.copy(pos);
+  }
+}
+
+// ═══ CUTAWAY ═══
+let cutawayMode = false;
+const clippingPlane = new THREE.Plane(new THREE.Vector3(0, 0, -1), 0);
+
+function toggleCutaway() {
+  cutawayMode = !cutawayMode;
+  document.getElementById('cutawayBtn').classList.toggle('active');
+  reactor.traverse(child => {
+    if (child.isMesh && child.material) {
+      if (cutawayMode) {
+        child.material = child.material.clone();
+        child.material.clippingPlanes = [clippingPlane];
+        child.material.clipShadows = true;
+      } else {
+        child.material.clippingPlanes = [];
+      }
+    }
+  });
+  renderer.localClippingEnabled = cutawayMode;
+}
+
+function toggleFlow() {
+  showFlow = !showFlow;
+  document.getElementById('flowBtn').classList.toggle('active');
+  if (!showFlow) {
+    flowParticles.forEach(p => scene.remove(p));
+    flowParticles = [];
+  }
+}
+
+// ═══ CAMERA CONTROL ═══
+let autoRotate = false;
+let isDragging = false;
+let prevMouse = { x: 0, y: 0 };
+let spherical = { radius: 14, theta: 0.6, phi: 1.2 };
+let targetSpherical = { ...spherical };
+
+function updateCamera() {
+  spherical.radius += (targetSpherical.radius - spherical.radius) * 0.08;
+  spherical.theta += (targetSpherical.theta - spherical.theta) * 0.08;
+  spherical.phi += (targetSpherical.phi - spherical.phi) * 0.08;
+
+  camera.position.x = spherical.radius * Math.sin(spherical.phi) * Math.cos(spherical.theta);
+  camera.position.y = spherical.radius * Math.cos(spherical.phi);
+  camera.position.z = spherical.radius * Math.sin(spherical.phi) * Math.sin(spherical.theta);
+  camera.lookAt(0, 0.5, 0);
+}
+
+canvas.addEventListener('mousedown', e => { isDragging = true; prevMouse = { x: e.clientX, y: e.clientY }; });
+canvas.addEventListener('mouseup', () => isDragging = false);
+canvas.addEventListener('mouseleave', () => isDragging = false);
+canvas.addEventListener('mousemove', e => {
+  if (isDragging) {
+    const dx = e.clientX - prevMouse.x;
+    const dy = e.clientY - prevMouse.y;
+    targetSpherical.theta -= dx * 0.005;
+    targetSpherical.phi = Math.max(0.3, Math.min(2.8, targetSpherical.phi + dy * 0.005));
+    prevMouse = { x: e.clientX, y: e.clientY };
+  }
+  updateTooltip(e);
+});
+canvas.addEventListener('wheel', e => {
+  targetSpherical.radius = Math.max(6, Math.min(25, targetSpherical.radius + e.deltaY * 0.01));
+});
+
+// Touch
+canvas.addEventListener('touchstart', e => {
+  if (e.touches.length === 1) {
+    isDragging = true;
+    prevMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }
+});
+canvas.addEventListener('touchmove', e => {
+  if (isDragging && e.touches.length === 1) {
+    const dx = e.touches[0].clientX - prevMouse.x;
+    const dy = e.touches[0].clientY - prevMouse.y;
+    targetSpherical.theta -= dx * 0.005;
+    targetSpherical.phi = Math.max(0.3, Math.min(2.8, targetSpherical.phi + dy * 0.005));
+    prevMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }
+});
+canvas.addEventListener('touchend', () => isDragging = false);
+
+function toggleSpin() {
+  autoRotate = !autoRotate;
+  document.getElementById('spinBtn').classList.toggle('active');
+}
+
+function resetView() {
+  targetSpherical = { radius: 14, theta: 0.6, phi: 1.2 };
+}
+
+// ═══ STEP VIEWS ═══
+const stepViews = [
+  { theta: 0.6, phi: 1.2, radius: 14 },   // overview (pellet feed)
+  { theta: 2.0, phi: 1.3, radius: 12 },   // seawater side
+  { theta: 0.3, phi: 1.0, radius: 10 },   // reaction close
+  { theta: 0.5, phi: 0.6, radius: 11 },   // separator top
+  { theta: -0.5, phi: 1.1, radius: 12 },  // fuel cell
+  { theta: 0.8, phi: 1.8, radius: 11 },   // byproduct bottom
+];
+
+const stepTexts = [
+  `<strong>Stage 1: Aluminum Pellet Feed</strong><br><br>Recycled aluminum (soda cans, scrap) is shredded into <span class="al">pebble-sized pellets</span> and pre-treated with a thin coating of <span class="highlight">gallium-indium alloy</span>. This alloy strips the natural oxide layer that normally prevents aluminum from reacting with water.<br><br>The pellets are stored in a <span class="ember">hopper magazine</span> — a sealed, gravity-fed cartridge that can be swapped at fuel stations like a propane tank. No volatile gases. No cryogenic storage. Just metal pellets at room temperature.<br><br>A motorized auger feeds pellets into the reaction chamber at a rate controlled by the vehicle's power demand. More throttle = more pellets = more hydrogen.`,
+
+  `<strong>Stage 2: Seawater Injection</strong><br><br><span class="water">Filtered seawater</span> is pumped from an onboard reservoir into the reaction chamber. No purification to drinking quality needed — the aluminum reacts with salt water directly.<br><br>MIT discovered that <span class="highlight">salt ions in seawater actually help recover</span> the gallium-indium catalyst alloy, making the seawater pathway MORE efficient than freshwater, not less.<br><br>For land vehicles away from coastlines, any non-potable water works. Brackish, industrial wastewater, even agricultural runoff. The reaction isn't picky. A 20-liter reservoir provides enough water for a full pellet cartridge.`,
+
+  `<strong>Stage 3: Catalytic Reaction</strong><br><br>Inside the chamber, aluminum pellets meet seawater and <span class="ember">imidazole catalyst</span> (the active compound in caffeine). The reaction is exothermic:<br><br>2Al + 6H₂O → 2Al(OH)₃ + 3H₂ ↑ + heat<br><br>Without catalyst: <span class="water">~2 hours</span> in seawater.<br>With imidazole: <span class="highlight">~5 minutes</span>. That's a 24x acceleration.<br><br>The chamber maintains ~50°C optimal temperature. Excess heat is captured by the vehicle's thermal management system. Reaction rate is self-limiting — controlled by pellet feed rate and water flow.`,
+
+  `<strong>Stage 4: H₂ Separation</strong><br><br><span class="highlight">Pure hydrogen gas</span> rises naturally from the reaction slurry and passes through a membrane separator. The membrane allows H₂ molecules through while blocking water vapor, boehmite particles, and residual catalyst.<br><br>No compression needed at this stage — the hydrogen flows at low pressure directly to the fuel cell. This eliminates the most dangerous and energy-intensive step in conventional hydrogen vehicles (700-bar compression tanks).<br><br>Separation efficiency: >99%. The hydrogen is fuel-cell grade without additional purification.`,
+
+  `<strong>Stage 5: Fuel Cell Conversion</strong><br><br>A <span class="highlight">PEM fuel cell stack</span> receives the on-demand hydrogen and combines it with ambient oxygen:<br><br>2H₂ + O₂ → 2H₂O + electricity<br><br>Efficiency: <span class="highlight">60-65%</span> conversion to electricity. The output powers a standard EV electric motor through a DC-DC converter. Same drivetrain as a Tesla or any BEV. The only exhaust is <span class="water">pure water vapor</span>.<br><br>Because hydrogen is generated on-demand, the fuel cell can be <span class="ember">smaller than in conventional FCEVs</span> — it only needs to match current power demand, not store peak capacity.`,
+
+  `<strong>Stage 6: Byproduct Recovery</strong><br><br>The reaction produces <span class="ember">aluminum hydroxide (boehmite)</span> — Al(OH)₃. This settles to the bottom of the reaction chamber and drains into a collection tank.<br><br>Boehmite is NOT waste. It's a <span class="highlight">commercially valuable mineral</span> used in semiconductor fabrication, industrial catalysts, and ceramic production. Selling recovered boehmite offsets fuel cost.<br><br>The <span class="al">gallium-indium alloy</span> is also recovered from the reaction residue via the salt ion interaction. It's collected, cleaned, and reused to pre-treat the next batch of aluminum pellets. Circular system. Nothing wasted.`
+];
+
+let currentStep = 0;
+
+function setStep(n) {
+  currentStep = n;
+  document.querySelectorAll('.step-btn').forEach((b, i) => b.classList.toggle('active', i === n));
+  document.getElementById('explainerText').innerHTML = stepTexts[n];
+  targetSpherical = { ...stepViews[n] };
+
+  // Animate H2 glow on step 3-4
+  h2Glow.intensity = (n >= 3 && n <= 4) ? 1.5 : 0;
+}
+
+// ═══ TOOLTIP (RAYCASTER) ═══
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+const tooltip = document.getElementById('tooltip');
+
+function updateTooltip(e) {
+  if (isDragging) { tooltip.style.display = 'none'; return; }
+
+  mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObjects(components, true);
+
+  if (intersects.length > 0) {
+    let obj = intersects[0].object;
+    while (obj && !obj.userData.name) obj = obj.parent;
+    if (obj && obj.userData.name) {
+      tooltip.style.display = 'block';
+      tooltip.style.left = (e.clientX + 15) + 'px';
+      tooltip.style.top = (e.clientY - 10) + 'px';
+      tooltip.querySelector('.tt-label').textContent = obj.userData.name;
+      tooltip.querySelector('.tt-body').textContent = obj.userData.desc;
+      canvas.style.cursor = 'pointer';
+      return;
+    }
+  }
+  tooltip.style.display = 'none';
+  canvas.style.cursor = 'grab';
+}
+
+// ═══ LIVE THERMODYNAMICS ENGINE ═══
+// Reaction: 2Al + 6H₂O → 2Al(OH)₃ + 3H₂ + heat
+// Molecular weights: Al=26.98, H₂O=18.015, Al(OH)₃=78.00, H₂=2.016
+// Stoichiometry: 2 mol Al produces 3 mol H₂
+// ΔH reaction ≈ -418 kJ per mol Al (exothermic)
+// H₂ LHV = 120.0 MJ/kg (lower heating value, realistic for PEM)
+// H₂ HHV = 141.8 MJ/kg
+// Boehmite (AlOOH) from Al(OH)₃ dehydration: molar mass 59.99
+
+const THERMO = {
+  alMolar: 26.982,    // g/mol
+  h2Molar: 2.016,     // g/mol
+  h2oMolar: 18.015,   // g/mol
+  aloh3Molar: 78.004, // g/mol
+  boehmiteMolar: 59.989, // g/mol AlOOH
+  deltaH: 418,        // kJ/mol Al (exothermic, positive = released)
+  h2LHV: 120.0,       // MJ/kg
+  yieldEff: 0.96,     // 96% H₂ separation efficiency
+  catalystBoost: function(tempC) {
+    // Imidazole catalyst effectiveness scales with temperature
+    // Optimal ~50°C, functional 10-70°C
+    // Arrhenius-like factor normalized to 1.0 at 50°C
+    return Math.min(1.2, 0.4 + 0.6 * Math.exp(-((tempC - 50) * (tempC - 50)) / 800));
+  }
+};
+
+function calcThermo() {
+  const alKgHr = parseFloat(document.getElementById('alFeed').value);
+  const waterTemp = parseFloat(document.getElementById('waterTemp').value);
+  const pemEff = parseFloat(document.getElementById('pemEff').value) / 100;
+
+  document.getElementById('alFeedDisp').textContent = alKgHr.toFixed(1);
+  document.getElementById('waterTempDisp').textContent = waterTemp;
+  document.getElementById('pemEffDisp').textContent = (pemEff * 100).toFixed(0);
+
+  // Moles of Al per hour
+  const alMolesHr = (alKgHr * 1000) / THERMO.alMolar;
+
+  // H₂ production: 2 mol Al → 3 mol H₂
+  const h2MolesHr = alMolesHr * (3 / 2);
+  const h2KgHr = (h2MolesHr * THERMO.h2Molar / 1000) * THERMO.yieldEff * THERMO.catalystBoost(waterTemp);
+
+  // Energy in H₂ (LHV)
+  const h2EnergyMJHr = h2KgHr * THERMO.h2LHV;
+
+  // Electrical output from PEM fuel cell
+  const elecKW = (h2EnergyMJHr / 3.6) * pemEff; // MJ/hr to kWh/hr = kW
+
+  // Reaction heat released
+  const heatKJHr = alMolesHr * THERMO.deltaH;
+  const heatKW = heatKJHr / 3600;
+
+  // Boehmite: Al(OH)₃ dehydrates to AlOOH + H₂O
+  // 2 mol Al → 2 mol Al(OH)₃ → 2 mol AlOOH
+  const boehmiteKgHr = (alMolesHr * THERMO.boehmiteMolar) / 1000;
+
+  // Water consumed: 6 mol H₂O per 2 mol Al → 3 mol H₂O per mol Al
+  const waterMolesHr = alMolesHr * 3;
+  const waterKgHr = (waterMolesHr * THERMO.h2oMolar) / 1000;
+  const waterLHr = waterKgHr; // ~1 kg/L for water
+
+  // Chain efficiency: (electrical output) / (energy to produce Al from recycling + reaction)
+  // Simplified: ratio of electrical energy out to chemical energy in H₂
+  const chainEff = pemEff * THERMO.yieldEff * THERMO.catalystBoost(waterTemp);
+
+  // Range estimate: assume 36kg Al cartridge, 15 kW average draw
+  const cartridgeKg = 36;
+  const cartridgeH2 = (((cartridgeKg * 1000 / THERMO.alMolar) * 1.5 * THERMO.h2Molar) / 1000) * THERMO.yieldEff * THERMO.catalystBoost(waterTemp);
+  const cartridgeMJ = cartridgeH2 * THERMO.h2LHV;
+  const cartridgeKWh = (cartridgeMJ / 3.6) * pemEff;
+  const avgDraw = 15; // kW
+  const hoursRange = cartridgeKWh / avgDraw;
+  const rangeKm = hoursRange * 80; // ~80 km/hr avg speed
+
+  // Update display
+  document.getElementById('calcH2').textContent = h2KgHr.toFixed(2) + ' kg/hr';
+  document.getElementById('calcH2E').textContent = h2EnergyMJHr.toFixed(1) + ' MJ/hr';
+  document.getElementById('calcElec').textContent = elecKW.toFixed(1) + ' kW';
+  document.getElementById('calcHeat').textContent = heatKW.toFixed(1) + ' kW';
+  document.getElementById('calcBoeh').textContent = boehmiteKgHr.toFixed(1) + ' kg/hr';
+  document.getElementById('calcWater').textContent = waterLHr.toFixed(1) + ' L/hr';
+  document.getElementById('calcChain').textContent = (chainEff * 100).toFixed(1) + '%';
+  document.getElementById('calcRange').textContent = '~' + Math.round(rangeKm) + ' km';
+
+  // Color coding
+  document.getElementById('calcElec').style.color = elecKW > 20 ? '#38b6a0' : elecKW > 10 ? '#c4a35a' : '#aa3a2a';
+}
+
+// Bind sliders
+document.getElementById('alFeed').addEventListener('input', calcThermo);
+document.getElementById('waterTemp').addEventListener('input', calcThermo);
+document.getElementById('pemEff').addEventListener('input', calcThermo);
+calcThermo(); // initial calc
+
+// ═══ ANIMATION LOOP ═══
+let time = 0;
+
+function animate() {
+  requestAnimationFrame(animate);
+  time += 0.016;
+
+  if (autoRotate && !isDragging) {
+    targetSpherical.theta += 0.003;
+  }
+
+  updateCamera();
+
+  // Subtle reactor breathing
+  reactor.position.y = Math.sin(time * 0.8) * 0.02;
+
+  // Flow particles
+  spawnFlowParticles();
+  updateFlowParticles();
+
+  // H2 glow pulse
+  if (h2Glow.intensity > 0) {
+    h2Glow.intensity = 1.2 + Math.sin(time * 3) * 0.4;
+  }
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+// ═══ RESIZE ═══
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</script>
+</body>
+</html>

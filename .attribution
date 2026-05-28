@@ -1,0 +1,50 @@
+{
+  "schema": "ROOT0-ATTRIBUTION-v1",
+  "work": {
+    "title": "AL-H2O Reactor — Engineering Reference Suite",
+    "subtitle": "On-Board Aluminum-Water Hydrogen Generation System",
+    "version": "1.0.0",
+    "created": "2025-05-28",
+    "description": "Complete engineering documentation, blueprints, specifications, safety analysis, bill of materials, and interactive 3D visualization suite for on-board hydrogen generation from aluminum + water.",
+    "license": "CC-BY-ND-4.0",
+    "url": "https://github.com/DavidWise01/al-h2o-reactor"
+  },
+  "human": {
+    "name": "David Lee Wise",
+    "handle": "ROOT0",
+    "github_user": "DavidWise01",
+    "entity": "TriPod LLC",
+    "substrate": "human",
+    "role": "architect · systems designer · deployment framework",
+    "contribution": "engineering architecture, The Cascade deployment framework, interactive visualizations, IP documentation"
+  },
+  "framework": {
+    "name": "The Cascade",
+    "tiers": 3,
+    "tier1": "Disaster response, submarines, remote medical, military",
+    "tier2": "EV charging, desalination, agricultural electrification",
+    "tier3": "Aluminum-as-currency, decentralized grid, developing world, space"
+  },
+  "chemistry_source": {
+    "institution": "MIT DMSE",
+    "authors": "Uddin, Lamber, et al.",
+    "year": 2023,
+    "reaction": "2Al + 6H2O → 2Al(OH)3 + 3H2 (imidazole catalyst, GaIn activator)",
+    "note": "Foundational chemistry is MIT open publication. TriPod contribution is engineering architecture and deployment framework."
+  },
+  "ip_claims": [
+    "AL-H2O passenger vehicle integration architecture",
+    "6-stage reactor system layout (hopper → auger → chamber → separator → PEM → recovery)",
+    "Swap-cartridge refueling design concept",
+    "The Cascade Tier 1/2/3 deployment framework",
+    "Live thermodynamics visualization with Arrhenius catalyst model",
+    "Aluminum-as-currency economic framework"
+  ],
+  "sha256_note": "Run `r0 stamp` to add SHA256 fingerprints to this file",
+  "beacon": {
+    "wayback_urls": [
+      "github.com/DavidWise01/al-h2o-reactor",
+      "davidwise01.github.io"
+    ]
+  }
+}

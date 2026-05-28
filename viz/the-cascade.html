@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE CASCADE // Aluminum-Water Civilization Blueprint</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
+
+:root {
+  --void: #060606;
+  --void-up: #0c0c0c;
+  --steel: #161618;
+  --steel-up: #1e1e22;
+  --earth: #2a2824;
+  --earth-mid: #3e3c36;
+  --bone: #c8bfa8;
+  --bone-dim: #6a6458;
+  --bone-ghost: #3a3832;
+  --h2: #38b6a0;
+  --h2-dim: #1a5c50;
+  --h2-ghost: #0e2e28;
+  --ember: #c45a2d;
+  --ember-dim: #7a3a1a;
+  --ember-ghost: #2a1a0e;
+  --al: #8a9aaa;
+  --water: #3a6a8a;
+  --text: #7a7468;
+  --text-up: #a8a090;
+  --white: #e8e2d8;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--void);
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+::selection { background: var(--h2-dim); color: var(--white); }
+
+/* ═══ GRAIN ═══ */
+body::after {
+  content:'';position:fixed;inset:0;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;
+}
+
+/* ═══ PROGRESS BAR ═══ */
+#progress {
+  position:fixed;top:0;left:0;height:2px;
+  background:linear-gradient(90deg,var(--h2),var(--ember));
+  width:0%;z-index:10000;transition:width 0.1s;
+}
+
+/* ═══ NAV ═══ */
+nav {
+  position:fixed;right:20px;top:50%;transform:translateY(-50%);
+  z-index:1000;display:flex;flex-direction:column;gap:12px;
+}
+nav a {
+  width:8px;height:8px;border-radius:50%;
+  border:1px solid var(--bone-ghost);background:transparent;
+  transition:all 0.4s;display:block;text-decoration:none;
+}
+nav a:hover, nav a.active { border-color:var(--h2);background:var(--h2); box-shadow:0 0 8px var(--h2-dim); }
+
+@media(max-width:800px){ nav{display:none;} }
+
+/* ═══ SECTIONS ═══ */
+section {
+  min-height:100vh;padding:80px 40px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+@media(max-width:800px){ section{padding:60px 20px;} }
+
+.section-inner { max-width:1100px;width:100%; }
+
+/* ═══ TYPOGRAPHY ═══ */
+.tier-label {
+  font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;
+  color:var(--bone-dim);margin-bottom:8px;
+}
+.tier-label span { color:var(--h2); }
+
+h2 {
+  font-family:'Cormorant Garamond',serif;font-size:3.2rem;
+  font-weight:300;color:var(--white);line-height:1.15;
+  margin-bottom:24px;
+}
+h2 em { font-style:italic;color:var(--h2); }
+h2 strong { font-weight:600;color:var(--ember); }
+
+@media(max-width:800px){ h2{font-size:2rem;} }
+
+h3 {
+  font-family:'Cormorant Garamond',serif;font-size:1.6rem;
+  font-weight:400;color:var(--bone);margin-bottom:16px;
+}
+
+p.lead {
+  font-size:0.8rem;line-height:1.9;color:var(--text-up);
+  max-width:680px;margin-bottom:32px;
+}
+
+.hl { color:var(--h2); }
+.em { color:var(--ember); }
+.al { color:var(--al); }
+
+/* ═══ HERO ═══ */
+#hero {
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  text-align:center;flex-direction:column;
+  background:radial-gradient(ellipse at 50% 80%, var(--h2-ghost) 0%, var(--void) 50%);
+}
+
+#hero h1 {
+  font-family:'Cormorant Garamond',serif;font-size:5.5rem;
+  font-weight:300;color:var(--white);letter-spacing:0.02em;
+  margin-bottom:16px;
+}
+#hero h1 span { color:var(--h2);font-weight:500; }
+
+@media(max-width:800px){ #hero h1{font-size:2.8rem;} }
+
+#hero .subtitle {
+  font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;
+  color:var(--bone-dim);margin-bottom:40px;
+}
+
+#hero .premise {
+  font-family:'Cormorant Garamond',serif;font-size:1.3rem;
+  font-weight:300;font-style:italic;color:var(--text-up);
+  max-width:600px;line-height:1.7;
+}
+
+.scroll-hint {
+  position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
+  font-size:0.5rem;letter-spacing:0.2em;color:var(--bone-ghost);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:0.8} }
+
+/* ═══ DIVIDERS ═══ */
+.divider {
+  height:1px;width:100%;max-width:400px;margin:0 auto 48px;
+  background:linear-gradient(90deg,transparent,var(--earth-mid),transparent);
+}
+
+/* ═══ CARD GRID ═══ */
+.card-grid {
+  display:grid;gap:16px;margin-top:32px;
+}
+.card-grid.cols-2 { grid-template-columns:1fr 1fr; }
+.card-grid.cols-3 { grid-template-columns:1fr 1fr 1fr; }
+.card-grid.cols-4 { grid-template-columns:1fr 1fr 1fr 1fr; }
+@media(max-width:800px){
+  .card-grid.cols-2,.card-grid.cols-3,.card-grid.cols-4 { grid-template-columns:1fr; }
+}
+
+.card {
+  background:var(--steel);border:1px solid var(--steel-up);
+  border-radius:4px;padding:24px;
+  transition:all 0.4s;position:relative;overflow:hidden;
+}
+.card:hover { border-color:var(--bone-ghost);transform:translateY(-2px); }
+
+.card .card-icon {
+  font-size:1.8rem;margin-bottom:12px;display:block;
+}
+.card .card-title {
+  font-family:'Cormorant Garamond',serif;font-size:1.2rem;
+  color:var(--bone);margin-bottom:8px;font-weight:500;
+}
+.card .card-body {
+  font-size:0.65rem;line-height:1.8;color:var(--text);
+}
+.card .card-stat {
+  font-family:'Cormorant Garamond',serif;font-size:2.2rem;
+  color:var(--h2);font-weight:300;margin-top:12px;
+}
+.card .card-stat-label {
+  font-size:0.5rem;letter-spacing:0.15em;color:var(--bone-dim);text-transform:uppercase;
+}
+
+/* ═══ FLOW DIAGRAM ═══ */
+.flow {
+  display:flex;align-items:center;gap:0;margin:32px 0;
+  overflow-x:auto;padding-bottom:12px;
+}
+.flow-node {
+  flex-shrink:0;background:var(--steel);border:1px solid var(--steel-up);
+  border-radius:4px;padding:14px 18px;text-align:center;min-width:120px;
+  transition:all 0.3s;
+}
+.flow-node:hover { border-color:var(--h2-dim); }
+.flow-node .fn-icon { font-size:1.4rem;margin-bottom:6px; }
+.flow-node .fn-label { font-size:0.6rem;color:var(--bone);letter-spacing:0.08em; }
+.flow-node .fn-sub { font-size:0.5rem;color:var(--text);margin-top:4px; }
+.flow-arrow {
+  flex-shrink:0;width:40px;text-align:center;
+  color:var(--h2-dim);font-size:1.2rem;
+}
+
+/* ═══ CALCULATOR ═══ */
+.calc {
+  background:var(--steel);border:1px solid var(--steel-up);
+  border-radius:4px;padding:28px;margin-top:32px;
+}
+.calc-title {
+  font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--bone-dim);margin-bottom:20px;
+}
+.calc-row {
+  display:flex;align-items:center;gap:16px;margin-bottom:16px;flex-wrap:wrap;
+}
+.calc-label { font-size:0.65rem;color:var(--text-up);min-width:160px; }
+.calc-input {
+  background:var(--void-up);border:1px solid var(--earth);
+  color:var(--white);font-family:'JetBrains Mono',monospace;
+  font-size:0.75rem;padding:8px 12px;border-radius:2px;
+  width:120px;outline:none;transition:border-color 0.3s;
+}
+.calc-input:focus { border-color:var(--h2); }
+.calc-unit { font-size:0.55rem;color:var(--bone-dim); }
+.calc-results {
+  margin-top:20px;padding-top:20px;border-top:1px solid var(--earth);
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;
+}
+.calc-result {
+  text-align:center;
+}
+.calc-result .cr-val {
+  font-family:'Cormorant Garamond',serif;font-size:2rem;
+  color:var(--h2);font-weight:400;
+}
+.calc-result .cr-label {
+  font-size:0.5rem;letter-spacing:0.12em;color:var(--bone-dim);text-transform:uppercase;margin-top:4px;
+}
+
+/* ═══ TIMELINE ═══ */
+.timeline { position:relative;padding-left:32px;margin-top:32px; }
+.timeline::before {
+  content:'';position:absolute;left:8px;top:0;bottom:0;
+  width:1px;background:linear-gradient(180deg,var(--h2-dim),var(--ember-dim),var(--bone-ghost));
+}
+.tl-item { position:relative;margin-bottom:32px; }
+.tl-item::before {
+  content:'';position:absolute;left:-28px;top:6px;
+  width:9px;height:9px;border-radius:50%;
+  border:1px solid var(--h2);background:var(--void);
+}
+.tl-item .tl-date {
+  font-size:0.55rem;letter-spacing:0.15em;color:var(--ember);margin-bottom:6px;
+}
+.tl-item .tl-title {
+  font-family:'Cormorant Garamond',serif;font-size:1.1rem;
+  color:var(--bone);margin-bottom:6px;
+}
+.tl-item .tl-body { font-size:0.6rem;line-height:1.8;color:var(--text); }
+
+/* ═══ BIG STAT ═══ */
+.big-stat {
+  text-align:center;padding:48px 0;
+}
+.big-stat .bs-num {
+  font-family:'Cormorant Garamond',serif;font-size:5rem;
+  font-weight:300;color:var(--h2);line-height:1;
+}
+.big-stat .bs-label {
+  font-size:0.6rem;letter-spacing:0.2em;color:var(--bone-dim);
+  text-transform:uppercase;margin-top:8px;
+}
+
+@media(max-width:800px){ .big-stat .bs-num{font-size:3rem;} }
+
+/* ═══ EQUATION ═══ */
+.equation {
+  text-align:center;padding:32px;margin:24px 0;
+  background:var(--steel);border:1px solid var(--steel-up);border-radius:4px;
+  font-family:'Cormorant Garamond',serif;font-size:1.6rem;
+  color:var(--bone);font-style:italic;letter-spacing:0.05em;
+}
+.equation .eq-hl { color:var(--h2);font-weight:500;font-style:normal; }
+.equation .eq-em { color:var(--ember);font-weight:500;font-style:normal; }
+
+/* ═══ FOOTER ═══ */
+footer {
+  padding:60px 40px;text-align:center;
+  border-top:1px solid var(--steel-up);
+  background:var(--void);
+}
+footer .f-mark {
+  font-family:'Cormorant Garamond',serif;font-size:1.4rem;
+  color:var(--bone-dim);margin-bottom:8px;
+}
+footer .f-sub {
+  font-size:0.5rem;letter-spacing:0.2em;color:var(--bone-ghost);text-transform:uppercase;
+}
+
+/* ═══ SCROLL REVEAL ═══ */
+.reveal {
+  opacity:0;transform:translateY(30px);
+  transition:opacity 0.8s ease,transform 0.8s ease;
+}
+.reveal.visible { opacity:1;transform:translateY(0); }
+.reveal-delay-1 { transition-delay:0.15s; }
+.reveal-delay-2 { transition-delay:0.3s; }
+.reveal-delay-3 { transition-delay:0.45s; }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav id="nav">
+  <a href="#hero" title="Start"></a>
+  <a href="#t0" title="The Reactor"></a>
+  <a href="#t1a" title="Disaster Power"></a>
+  <a href="#t1b" title="Underwater"></a>
+  <a href="#t1c" title="Remote Medical"></a>
+  <a href="#t2a" title="Desalination"></a>
+  <a href="#t2b" title="Off-Grid Charging"></a>
+  <a href="#t2c" title="Agriculture"></a>
+  <a href="#t3a" title="Aluminum Economy"></a>
+  <a href="#t3b" title="Decentralized Grid"></a>
+  <a href="#t3c" title="Developing World"></a>
+  <a href="#t3d" title="Space"></a>
+  <a href="#t4" title="The Inversion"></a>
+  <a href="#calc" title="Calculator"></a>
+  <a href="#timeline" title="Timeline"></a>
+  <a href="#end" title="End"></a>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section id="hero">
+  <div>
+    <h1>The <span>Cascade</span></h1>
+    <div class="subtitle">What one reactor unlocks for humanity</div>
+    <p class="premise">Aluminum + Water + Caffeine = On-demand hydrogen anywhere.<br>The chemistry is solved. This is what comes next.</p>
+  </div>
+  <div class="scroll-hint">SCROLL TO BEGIN ▾</div>
+</section>
+
+<!-- ═══════════════ T0: THE REACTOR ═══════════════ -->
+<section id="t0">
+  <div class="section-inner">
+    <div class="tier-label"><span>FOUNDATION</span> // THE REACTOR</div>
+    <h2 class="reveal">The machine that <em>changes the question</em></h2>
+    <p class="lead reveal reveal-delay-1">Before this reactor, the question was "how do we transport hydrogen safely?" After it, the question becomes "where do we want energy?" Because aluminum pellets go anywhere. Water exists everywhere. The reactor is the size of a water bottle. Everything below becomes possible.</p>
+
+    <div class="equation reveal reveal-delay-2">
+      2<span class="eq-hl">Al</span> + 6H₂O + <span class="eq-em">imidazole</span> → 2Al(OH)₃ + 3<span class="eq-hl">H₂</span>↑ + heat
+    </div>
+
+    <div class="flow reveal reveal-delay-2">
+      <div class="flow-node"><div class="fn-icon">🥫</div><div class="fn-label">SCRAP AL</div><div class="fn-sub">Recycled cans</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="fn-icon">🌊</div><div class="fn-label">SEAWATER</div><div class="fn-sub">Any water source</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="fn-icon">☕</div><div class="fn-label">CATALYST</div><div class="fn-sub">Imidazole / caffeine</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node" style="border-color:var(--h2-dim)"><div class="fn-icon">⚡</div><div class="fn-label" style="color:var(--h2)">HYDROGEN</div><div class="fn-sub">96% yield, 5 min</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="fn-icon">🔋</div><div class="fn-label">FUEL CELL</div><div class="fn-sub">60-65% efficient</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node" style="border-color:var(--ember-dim)"><div class="fn-icon">⚡</div><div class="fn-label" style="color:var(--ember)">ELECTRICITY</div><div class="fn-sub">Clean DC power</div></div>
+    </div>
+
+    <div class="card-grid cols-3 reveal reveal-delay-3">
+      <div class="card"><div class="card-stat">36 kg</div><div class="card-stat-label">aluminum per 400km</div><div class="card-body" style="margin-top:8px">Weight of a carry-on suitcase. Stable at room temp. Non-volatile. Ship via FedEx.</div></div>
+      <div class="card"><div class="card-stat">5 min</div><div class="card-stat-label">reaction time w/ catalyst</div><div class="card-body" style="margin-top:8px">24x faster than without. The catalyst is caffeine. Literally coffee.</div></div>
+      <div class="card"><div class="card-stat">$9/kg</div><div class="card-stat-label">hydrogen production cost</div><div class="card-body" style="margin-top:8px">MIT 2025 LCA. Competitive with green electrolysis. Byproduct revenue offsets further.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ T1A: DISASTER POWER ═══════════════ -->
+<section id="t1a">
+  <div class="section-inner">
+    <div class="tier-label"><span>TIER 1</span> // DIRECT APPLICATION</div>
+    <h2 class="reveal">Disaster response <em>without diesel</em></h2>
+    <p class="lead reveal reveal-delay-1">Hurricane kills the grid. Diesel generators need fuel trucks on roads that don't exist anymore. This reactor runs on <span class="hl">floodwater</span>. The fuel is aluminum — pre-positioned, non-perishable, non-volatile. A single pellet cartridge powers an emergency shelter for 72 hours.</p>
+
+    <div class="card-grid cols-2 reveal reveal-delay-2">
+      <div class="card">
+        <div class="card-title">What it replaces</div>
+        <div class="card-body">Diesel generators: 250 lbs, loud, toxic exhaust, requires fuel delivery chain, limited runtime. FEMA spends $1.2B/year on emergency power logistics. Most failure points are fuel delivery, not equipment.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">What it enables</div>
+        <div class="card-body">Pre-stage pellet cartridges at every fire station, school, hospital. They don't expire. They don't leak. They don't explode. When disaster hits, add local water (any water — flood, rain, pond). Power in 5 minutes. No supply chain needed.</div>
+      </div>
+    </div>
+
+    <div class="big-stat reveal reveal-delay-3">
+      <div class="bs-num">72 hrs</div>
+      <div class="bs-label">continuous power from one 36kg pellet cartridge + local water</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ T1B: UNDERWATER ═══════════════ -->
+<section id="t1b">
+  <div class="section-inner">
+    <div class="tier-label"><span>TIER 1</span> // DIRECT APPLICATION</div>
+    <h2 class="reveal">A submarine that <em>drinks the ocean</em></h2>
+    <p class="lead reveal reveal-delay-1">MIT is already targeting this. The reactor intake IS the environment. Seawater surrounds the vessel. Aluminum pellets are dense, stable ballast. The reactor generates hydrogen, the fuel cell generates electricity, the exhaust is water that returns to the ocean. The vessel's endurance is limited only by its aluminum supply.</p>
+
+    <div class="card-grid cols-3 reveal reveal-delay-2">
+      <div class="card"><div class="card-icon">🤿</div><div class="card-title">AUV Endurance</div><div class="card-body">Autonomous underwater vehicles currently limited to 24-48 hours on batteries. Al-water reactor: 30+ days continuous operation. Ocean survey, pipeline inspection, environmental monitoring without recovery.</div></div>
+      <div class="card"><div class="card-icon">🚢</div><div class="card-title">Small Submarine</div><div class="card-body">Research submersibles, coast guard, search-and-rescue. Silent running (no diesel). Zero acoustic signature. Zero exhaust bubbles (water exhaust dissolves). Invisible.</div></div>
+      <div class="card"><div class="card-icon">🌊</div><div class="card-title">Ocean Platforms</div><div class="card-body">Floating research stations, offshore sensor networks, tsunami warning buoys. Permanent power from permanent water. No solar dependency. Works at depth, at night, in storms.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ T1C: REMOTE MEDICAL ═══════════════ -->
+<section id="t1c">
+  <div class="section-inner">
+    <div class="tier-label"><span>TIER 1</span> // DIRECT APPLICATION</div>
+    <h2 class="reveal">Power where there are <strong>no wires</strong></h2>
+    <p class="lead reveal reveal-delay-1">Field hospitals in conflict zones. Rural clinics in sub-Saharan Africa. Refugee camps. Anywhere humans need medical care and don't have a grid connection. The reactor's output is clean DC power — the exact format medical equipment needs. No voltage conversion losses. No generator fumes near patients.</p>
+
+    <div class="card-grid cols-2 reveal reveal-delay-2">
+      <div class="card">
+        <div class="card-title">What 1kW continuous powers</div>
+        <div class="card-body">Vaccine refrigerator (60W) + LED surgical light (150W) + oxygen concentrator (300W) + patient monitors ×4 (200W) + communications (100W) + charging station (190W). A full field clinic from one reactor.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Supply chain advantage</div>
+        <div class="card-body">Aluminum pellets ship as inert metal. No hazmat classification. No refrigeration. No expiration date. Fly them, truck them, airdrop them. Water is sourced locally. The catalyst lasts for thousands of cycles.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ T2A: DESALINATION ═══════════════ -->
+<section id="t2a">
+  <div class="section-inner">
+    <div class="tier-label"><span>TIER 2</span> // ENABLES SOMETHING ELSE</div>
+    <h2 class="reveal">Seawater in, <em>drinking water</em> out</h2>
+    <p class="lead reveal reveal-delay-1">The reactor uses seawater as input. The fuel cell produces electricity AND water as byproducts. Use that electricity to run a reverse osmosis membrane on MORE seawater. Output: drinking water + surplus hydrogen. <span class="hl">The system feeds itself.</span></p>
+
+    <div class="equation reveal reveal-delay-2">
+      Seawater → <span class="eq-hl">Reactor</span> → Electricity → <span class="eq-em">RO Membrane</span> → Drinking Water + H₂ surplus
+    </div>
+
+    <div class="card-grid cols-2 reveal reveal-delay-3">
+      <div class="card">
+        <div class="card-stat">2.6B</div>
+        <div class="card-stat-label">people facing water scarcity by 2050</div>
+        <div class="card-body" style="margin-top:8px">UN projection. Most live within 100km of coastline. Seawater is not the problem. Energy to desalinate is the problem. This solves the energy side.</div>
+      </div>
+      <div class="card">
+        <div class="card-stat">$0.50</div>
+        <div class="card-stat-label">estimated cost per cubic meter</div>
+        <div class="card-body" style="margin-top:8px">Current RO desalination: $0.50-$2.50/m³, dominated by electricity cost. If electricity comes from aluminum-water (whose fuel is recycled trash), the cost floor drops.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ T2B: OFF-GRID CHARGING ═══════════════ -->
+<section id="t2b">
+  <div class="section-inner">
+    <div class="tier-label"><span>TIER 2</span> // ENABLES SOMETHING ELSE</div>
+    <h2 class="reveal">EV charging <em>without the grid</em></h2>
+    <p class="lead reveal reveal-delay-1">A charging station that needs no power lines. Pellet supply + local water = electricity = charge any electric vehicle. Deploy in rural highways, developing nations, disaster zones, national parks. The "station" is a shipping container with a reactor, water tank, and charging cables.</p>
+
+    <div class="card-grid cols-3 reveal reveal-delay-2">
+      <div class="card"><div class="card-stat">0</div><div class="card-stat-label">grid connections needed</div></div>
+      <div class="card"><div class="card-stat">~50kW</div><div class="card-stat-label">DC fast charge output</div></div>
+      <div class="card"><div class="card-stat">∞</div><div class="card-stat-label">deployment locations</div></div>
+    </div>
+
+    <p class="lead reveal reveal-delay-3" style="margin-top:24px">This breaks the chicken-and-egg problem of EV infrastructure. You don't need to run power lines to the charging station. You don't need the grid to reach rural areas first. You ship a container, fill the water tank, load the pellets. Charging station operational in one day, anywhere on Earth.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ T2C: AGRICULTURE ═══════════════ -->
+<section id="t2c">
+  <div class="section-inner">
+    <div class="tier-label"><span>TIER 2</span> // ENABLES SOMETHING ELSE</div>
+    <h2 class="reveal">Farms that <em>never stop pumping</em></h2>
+    <p class="lead reveal reveal-delay-1">Solar irrigation pumps fail at night, in clouds, in winter. Diesel pumps require fuel delivery to remote fields. The aluminum-water reactor runs 24/7 on scrap metal and ditch water. Continuous irrigation in any weather, any time, any location. The exhaust waters your crops.</p>
+
+    <div class="card-grid cols-2 reveal reveal-delay-2">
+      <div class="card">
+        <div class="card-title">Small-holder farms</div>
+        <div class="card-body">Sub-Saharan Africa, Southeast Asia, South America. Millions of farms with no grid access. Current options: hand pumping, unreliable solar, expensive diesel. Al-water reactor: reliable power from locally collected scrap aluminum + river/well water.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Precision agriculture</div>
+        <div class="card-body">Sensor networks, automated irrigation valves, drone charging stations — all powered by distributed reactors across large farms. No wiring between fields. Each station is self-contained and self-powered.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ T3A: ALUMINUM ECONOMY ═══════════════ -->
+<section id="t3a">
+  <div class="section-inner">
+    <div class="tier-label"><span>TIER 3</span> // CHANGES THE ECONOMICS</div>
+    <h2 class="reveal"><strong>Aluminum</strong> becomes <em>currency</em></h2>
+    <p class="lead reveal reveal-delay-1">If scrap aluminum = portable energy, the economics of recycling invert overnight. Aluminum isn't waste anymore. It's fuel stock. Every landfill is an energy reserve. Every soda can is a battery. The 800,000 tonnes landfilled annually in the US alone becomes worth billions as fuel.</p>
+
+    <div class="big-stat reveal reveal-delay-2">
+      <div class="bs-num">800K</div>
+      <div class="bs-label">tonnes of aluminum landfilled in the US per year — enough to fuel millions of vehicles</div>
+    </div>
+
+    <div class="card-grid cols-3 reveal reveal-delay-3">
+      <div class="card"><div class="card-icon">♻️</div><div class="card-title">Scrap collectors → Energy suppliers</div><div class="card-body">The informal recycling economy in developing nations (millions of people) gains a direct customer: energy production. Aluminum scrap price rises. Collection rates increase. Landfill volume decreases.</div></div>
+      <div class="card"><div class="card-icon">⛏️</div><div class="card-title">Landfills → Fuel mines</div><div class="card-body">Urban mining of aluminum from existing landfills becomes economically viable. Every city sits on an energy reserve it's been burying for decades.</div></div>
+      <div class="card"><div class="card-icon">📊</div><div class="card-title">New commodity market</div><div class="card-body">Aluminum futures priced not just by industrial demand but by energy demand. "Energy-grade aluminum" as a traded commodity class. New financial instruments, new markets.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ T3B: DECENTRALIZED GRID ═══════════════ -->
+<section id="t3b">
+  <div class="section-inner">
+    <div class="tier-label"><span>TIER 3</span> // CHANGES THE ECONOMICS</div>
+    <h2 class="reveal">The grid becomes <em>optional</em></h2>
+    <p class="lead reveal reveal-delay-1">If every building can generate its own power from aluminum pellets and local water, the centralized electrical grid becomes a convenience, not a necessity. Power outages become impossible for anyone with a pellet stockpile. Utility monopolies lose their leverage. Energy independence at the building level.</p>
+
+    <div class="card-grid cols-2 reveal reveal-delay-2">
+      <div class="card">
+        <div class="card-title">Home power</div>
+        <div class="card-body">Average US home: 30 kWh/day. At reactor efficiency, approximately 15-20 kg of aluminum pellets per day. That's a weekly pellet delivery service — like propane delivery but safer, cheaper, and the "tank" never explodes. The byproduct bin gets collected and sold.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Commercial/Industrial</div>
+        <div class="card-body">Data centers, factories, hospitals — any facility that needs guaranteed uptime. No diesel backup generators. No battery walls. Pellet reserves stored in a closet. Water from municipal supply or rainwater. Unlimited runtime.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ T3C: DEVELOPING WORLD ═══════════════ -->
+<section id="t3c">
+  <div class="section-inner">
+    <div class="tier-label"><span>TIER 3</span> // CHANGES THE ECONOMICS</div>
+    <h2 class="reveal">Skip the grid <em>entirely</em></h2>
+    <p class="lead reveal reveal-delay-1">Cell phones skipped landlines. Mobile banking skipped brick-and-mortar banks. Nations without electrical grid infrastructure skip it entirely and go straight to <span class="hl">distributed aluminum-water power</span>. Bauxite-rich countries (Guinea, Indonesia, Jamaica, Australia) become energy exporters through processed aluminum instead of raw ore.</p>
+
+    <div class="card-grid cols-2 reveal reveal-delay-2">
+      <div class="card">
+        <div class="card-stat">770M</div>
+        <div class="card-stat-label">people without electricity access</div>
+        <div class="card-body" style="margin-top:8px">World Bank 2024. Most in sub-Saharan Africa. Grid extension costs $20,000-$50,000/km. Al-water reactor: ship a box, add water, power on.</div>
+      </div>
+      <div class="card">
+        <div class="card-stat">60%</div>
+        <div class="card-stat-label">of global bauxite in developing nations</div>
+        <div class="card-body" style="margin-top:8px">Guinea alone holds 25% of global bauxite reserves. Currently exports raw ore for $30-50/tonne. Process into energy-grade aluminum pellets: $2,000+/tonne value. 40-60x value multiplication.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ T3D: SPACE ═══════════════ -->
+<section id="t3d">
+  <div class="section-inner">
+    <div class="tier-label"><span>TIER 3</span> // CHANGES THE ECONOMICS</div>
+    <h2 class="reveal">Power on <em>other worlds</em></h2>
+    <p class="lead reveal reveal-delay-1">Aluminum: lightweight, stable, non-volatile, doesn't degrade in vacuum. Water: confirmed on the Moon (polar ice) and Mars (subsurface). Transport aluminum from Earth (or smelt from lunar regolith — the Moon's surface is 7% aluminum oxide). React with local water. Power generation on other planets using transported metal and found water.</p>
+
+    <div class="card-grid cols-3 reveal reveal-delay-2">
+      <div class="card"><div class="card-icon">🌙</div><div class="card-title">Lunar Base Power</div><div class="card-body">Polar ice + shipped/smelted aluminum = base power during 14-day lunar night when solar panels are useless. Byproduct (boehmite) used in habitat construction.</div></div>
+      <div class="card"><div class="card-icon">🔴</div><div class="card-title">Mars Surface Ops</div><div class="card-body">Subsurface ice + aluminum cargo = power for habitat, rover charging, ISRU systems. Aluminum is better mass-to-energy ratio than RTG fuel for non-nuclear missions.</div></div>
+      <div class="card"><div class="card-icon">🛰️</div><div class="card-title">Deep Space Probes</div><div class="card-body">Carry aluminum + small water reserve. React on-demand for power bursts. No nuclear material, no solar panel degradation. Indefinite shelf life.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ T4: THE INVERSION ═══════════════ -->
+<section id="t4" style="background:radial-gradient(ellipse at 50% 50%, var(--ember-ghost) 0%, var(--void) 50%);">
+  <div class="section-inner" style="text-align:center;">
+    <div class="tier-label"><span>TIER 4</span> // THE QUESTION NOBODY'S ASKING</div>
+    <h2 class="reveal" style="max-width:800px;margin:0 auto 24px;">Why is anyone still building <strong>hydrogen infrastructure?</strong></h2>
+    <p class="lead reveal reveal-delay-1" style="margin:0 auto 32px;">The entire hydrogen economy model — $2M+ per fueling station, 700-bar compressed gas, cryogenic transport, explosion risk — becomes obsolete. You don't deliver hydrogen. You deliver aluminum pellets in a cardboard box. The "station" is a pellet vending machine and a water tap.</p>
+
+    <div class="divider reveal reveal-delay-2"></div>
+
+    <div class="card-grid cols-2 reveal reveal-delay-2" style="max-width:800px;margin:0 auto;">
+      <div class="card" style="border-color:var(--ember-dim);text-align:left;">
+        <div class="card-title" style="color:var(--ember)">OLD MODEL</div>
+        <div class="card-body">
+          Centralized H₂ production → Compression to 700 bar → Cryogenic tanker trucks → $2M fueling stations → Consumer pumps H₂ → Explosion risk at every step → Infrastructure cost: $trillions
+        </div>
+      </div>
+      <div class="card" style="border-color:var(--h2-dim);text-align:left;">
+        <div class="card-title" style="color:var(--h2)">NEW MODEL</div>
+        <div class="card-body">
+          Recycled aluminum → Pellet cartridges (ship like packages) → Vending machine at station → Consumer swaps cartridge → Water from any source → H₂ generated in vehicle → Infrastructure cost: pellet logistics only
+        </div>
+      </div>
+    </div>
+
+    <div class="big-stat reveal reveal-delay-3">
+      <div class="bs-num" style="color:var(--ember)">$0</div>
+      <div class="bs-label">hydrogen compression, cryogenic storage, and pipeline infrastructure needed</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CALCULATOR ═══════════════ -->
+<section id="calc">
+  <div class="section-inner">
+    <div class="tier-label"><span>TOOL</span> // DEPLOYMENT CALCULATOR</div>
+    <h2 class="reveal">Size your <em>deployment</em></h2>
+
+    <div class="calc reveal reveal-delay-1">
+      <div class="calc-title">Aluminum-Water Deployment Calculator</div>
+      <div class="calc-row">
+        <span class="calc-label">Daily energy need</span>
+        <input type="number" class="calc-input" id="calcKwh" value="30" min="1" oninput="calculate()">
+        <span class="calc-unit">kWh / day</span>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">Water source</span>
+        <select class="calc-input" id="calcWater" style="width:160px" onchange="calculate()">
+          <option value="sea">Seawater</option>
+          <option value="fresh">Freshwater</option>
+          <option value="waste">Wastewater</option>
+        </select>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">Aluminum source</span>
+        <select class="calc-input" id="calcAl" style="width:160px" onchange="calculate()">
+          <option value="recycled">Recycled scrap</option>
+          <option value="primary">Primary smelted</option>
+        </select>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">Duration</span>
+        <input type="number" class="calc-input" id="calcDays" value="30" min="1" oninput="calculate()">
+        <span class="calc-unit">days</span>
+      </div>
+
+      <div class="calc-results" id="calcResults">
+        <div class="calc-result"><div class="cr-val" id="crAl">--</div><div class="cr-label">kg aluminum needed</div></div>
+        <div class="calc-result"><div class="cr-val" id="crWater">--</div><div class="cr-label">liters water needed</div></div>
+        <div class="calc-result"><div class="cr-val" id="crH2">--</div><div class="cr-label">kg H₂ produced</div></div>
+        <div class="calc-result"><div class="cr-val" id="crCO2">--</div><div class="cr-label">kg CO₂ total</div></div>
+        <div class="calc-result"><div class="cr-val" id="crCost">--</div><div class="cr-label">estimated fuel cost</div></div>
+        <div class="calc-result"><div class="cr-val" id="crByproduct">--</div><div class="cr-label">kg boehmite (sellable)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TIMELINE ═══════════════ -->
+<section id="timeline">
+  <div class="section-inner">
+    <div class="tier-label"><span>ROADMAP</span> // DEPLOYMENT TIMELINE</div>
+    <h2 class="reveal">From lab to <em>civilization</em></h2>
+
+    <div class="timeline reveal reveal-delay-1">
+      <div class="tl-item">
+        <div class="tl-date">2024 — COMPLETED</div>
+        <div class="tl-title">MIT proves aluminum-seawater-caffeine reaction</div>
+        <div class="tl-body">Bottle-sized reactor demonstrated. Gallium-indium alloy recovery confirmed. Imidazole catalyst discovered. Published in Cell Reports Physical Science.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025 — COMPLETED</div>
+        <div class="tl-title">Life-cycle assessment validates scalability</div>
+        <div class="tl-body">1.45 kg CO₂/kg H₂. 90% cleaner than fossil hydrogen. Published in Cell Reports Sustainability. Cost: ~$9/kg H₂. Boehmite byproduct value confirmed.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-2026 — IN PROGRESS</div>
+        <div class="tl-title">Marine reactor prototypes</div>
+        <div class="tl-body">MIT targeting boats and underwater vehicles. Electric bike demonstrated. Small car demonstrated. Reactor engineering for variable demand rates.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026-2028 — ENGINEERING GAP</div>
+        <div class="tl-title">Passenger vehicle integration</div>
+        <div class="tl-body">On-board reactor + auger feed + membrane separator + PEM fuel cell. The packaging problem. Swap-cartridge standardization. Safety certification. THIS IS THE PRODUCT.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2028-2030 — INFRASTRUCTURE</div>
+        <div class="tl-title">Pellet distribution network</div>
+        <div class="tl-body">Cartridge standardization. Pellet stations at existing gas stations (minimal retrofit). Boehmite collection and catalyst recovery logistics. Aluminum recycling pipeline integration.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2030-2035 — CASCADE</div>
+        <div class="tl-title">Tier 2 and Tier 3 deployments begin</div>
+        <div class="tl-body">Desalination systems. Off-grid EV charging. Agricultural deployment in developing nations. Aluminum commodity market evolution. Grid decentralization begins.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2035+ — TRANSFORMATION</div>
+        <div class="tl-title">Hydrogen infrastructure becomes obsolete</div>
+        <div class="tl-body">No new compressed H₂ stations built. Pellet logistics replaces hydrogen logistics. Bauxite nations become energy exporters. Lunar/Mars applications in development. The cascade is complete.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ END ═══════════════ -->
+<section id="end" style="background:radial-gradient(ellipse at 50% 30%, var(--h2-ghost) 0%, var(--void) 50%);">
+  <div class="section-inner" style="text-align:center;">
+    <h2 class="reveal" style="max-width:700px;margin:0 auto 24px;">The chemistry is <em>solved</em>.<br>The engineering gap is the <strong>product</strong>.</h2>
+    <p class="lead reveal reveal-delay-1" style="margin:0 auto 40px;">Aluminum + water + caffeine. Trash, ocean, and coffee. The three most abundant inputs on Earth producing the cleanest energy carrier known to science. The cascade starts with one reactor. It ends with a civilization that doesn't need pipelines, power lines, or petroleum.</p>
+
+    <div class="divider reveal reveal-delay-2"></div>
+
+    <p class="reveal reveal-delay-3" style="font-size:0.6rem;letter-spacing:0.1em;color:var(--bone-dim);max-width:500px;margin:0 auto;">
+      "You don't build pipes. You build cartridges."
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="f-mark">TriPod Systems</div>
+  <div class="f-sub">Anchor × Bubble × Gravity Well // World = Family // The Cascade // 2026</div>
+</footer>
+
+<script>
+// ═══ SCROLL PROGRESS ═══
+const progressBar = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+  progressBar.style.width = (scrolled * 100) + '%';
+});
+
+// ═══ SCROLL REVEAL ═══
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+// ═══ NAV ACTIVE STATE ═══
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('nav a');
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(s => navObserver.observe(s));
+
+// ═══ CALCULATOR ═══
+function calculate() {
+  const kwhDay = parseFloat(document.getElementById('calcKwh').value) || 30;
+  const days = parseFloat(document.getElementById('calcDays').value) || 30;
+  const waterType = document.getElementById('calcWater').value;
+  const alType = document.getElementById('calcAl').value;
+
+  const totalKwh = kwhDay * days;
+
+  // 1 kg H2 ≈ 33.6 kWh energy content
+  // Fuel cell efficiency: 62%
+  // So 1 kg H2 → ~20.8 kWh electrical output
+  const kwhPerKgH2 = 33.6 * 0.62;
+  const h2Needed = totalKwh / kwhPerKgH2;
+
+  // 1 kg H2 requires ~9 kg Al (stoichiometric: 2Al + 6H2O → 2Al(OH)3 + 3H2)
+  // Molar: 54g Al → 6g H2, so 9kg Al per 1kg H2
+  const alNeeded = h2Needed * 9;
+
+  // Water: ~20-30 L per kg H2 depending on source
+  const waterMultiplier = waterType === 'sea' ? 22 : waterType === 'fresh' ? 20 : 25;
+  const waterNeeded = h2Needed * waterMultiplier;
+
+  // CO2: recycled Al = 1.45 kg CO2/kg H2, primary = ~14 kg CO2/kg H2
+  const co2PerKg = alType === 'recycled' ? 1.45 : 14;
+  const co2Total = h2Needed * co2PerKg;
+
+  // Cost: ~$9/kg H2 (recycled Al + seawater), ~$20/kg H2 (primary Al)
+  const costPerKg = alType === 'recycled' ? 9 : 20;
+  const costTotal = h2Needed * costPerKg;
+
+  // Byproduct: 1 kg H2 → ~26 kg boehmite (stoichiometric: 2Al(OH)3 = 156g per 6g H2 = 26:1)
+  const boehmite = h2Needed * 26;
+
+  document.getElementById('crAl').textContent = Math.round(alNeeded).toLocaleString();
+  document.getElementById('crWater').textContent = Math.round(waterNeeded).toLocaleString();
+  document.getElementById('crH2').textContent = h2Needed.toFixed(1);
+  document.getElementById('crCO2').textContent = Math.round(co2Total).toLocaleString();
+  document.getElementById('crCost').textContent = '$' + Math.round(costTotal).toLocaleString();
+  document.getElementById('crByproduct').textContent = Math.round(boehmite).toLocaleString();
+}
+calculate();
+</script>
+</body>
+</html>
