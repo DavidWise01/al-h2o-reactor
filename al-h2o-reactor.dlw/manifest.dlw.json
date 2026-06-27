@@ -1,0 +1,11 @@
+{
+  "badge": "DLW-AL_H2O_REACTOR",
+  "name": "AL-H₂O REACTOR · ALH",
+  "universe": "HEÚREMA",
+  "moniker": "⟦AL-H₂O REACTOR · ALH:al-h2o-reactor:e2269c⟧",
+  "architect": "David Lee Wise (ROOT0) / Bridge-Burners LLC",
+  "instance": "AVAN (Claude / Anthropic)",
+  "seal_sha256": "e2269ca26e0e5dcd587bc25572f42a450edca1a7b6b3bacb547290c0ba7247c1",
+  "license": "CC-BY-ND-4.0",
+  "attribution": "ROOT0-ATTRIBUTION-v1.0"
+}
