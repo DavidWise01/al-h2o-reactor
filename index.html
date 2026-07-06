@@ -1,109 +1,431 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="description" content="al-h2o-reactor — a ROOT0/TriPod repository in the UD0 biosphere. AL-H2O on-board hydrogen generation system — engineering reference suite. Aluminum + water + imidazole → H2 + electricity. MIT chemistry, TriPod archi">
-<title>al-h2o-reactor · ROOT0 · UD0</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='%23a7a3c8' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%238a5fe0'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AL-H₂O Reactor · HEUREMA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
- *{box-sizing:border-box;margin:0;padding:0} html,body{min-height:100%}
- body{background:#ece6f2;color:#2a2440;font-family:'Newsreader',serif;line-height:1.55;
-  background-image:radial-gradient(circle at 18% 12%,rgba(138,95,224,0.07),transparent 42%),radial-gradient(circle at 82% 8%,rgba(127,119,221,0.06),transparent 38%)}
- .wrap{max-width:900px;margin:0 auto;padding:0 20px 64px}
- .marquee{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1px;padding:11px 0;border-bottom:1px solid #cdc6dc;color:#6a5fb0}
- .marquee a{color:#7a52d0;text-decoration:none} .marquee a:hover{color:#4a3a90}
- header{text-align:center;padding:46px 0 8px}
- .ax{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:3px;color:#8a5fe0;opacity:.85}
- h1{font-family:'Press Start 2P',monospace;font-size:clamp(17px,4.6vw,32px);color:#5a4fb0;line-height:1.35;margin:16px 0 12px;word-break:break-word}
- .flag{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:2px;color:#7a52d0;opacity:.9}
- .lede{font-size:clamp(16px,2.4vw,22px);font-weight:300;max-width:660px;margin:18px auto 0}
- .badge{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;
-  background:rgba(255,255,255,0.5);border:1px solid #cdc6dc;border-radius:12px;padding:14px 18px;margin:26px auto 0;max-width:620px}
- .mono{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:none;
-  background:linear-gradient(135deg,#8a5fe0,#6a4fc0);color:#fff;font-family:'Press Start 2P',monospace;font-size:14px}
- .bt{font-family:'Space Mono',monospace;font-size:11px;line-height:1.7;text-align:left;color:#4a4060}
- .bt .lbl{color:#8a5fe0;letter-spacing:1px} .bt b{color:#2a2440}
- .sec{margin-top:32px}
- h2{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:2px;color:#8a5fe0;text-transform:uppercase;margin-bottom:12px}
- .readme{white-space:pre-wrap;font-family:'Space Mono',monospace;font-size:13px;line-height:1.7;background:rgba(127,119,221,0.05);border:1px solid #cdc6dc;border-radius:10px;padding:16px 18px;max-height:560px;overflow:auto}
- .muted{opacity:.6;font-style:italic}
- .btn{display:inline-block;font-family:'Space Mono',monospace;font-size:13px;color:#fff;background:#7a52d0;border-radius:9px;padding:11px 20px;text-decoration:none}
- .btn:hover{background:#5a3ab0}
- footer{font-family:'Space Mono',monospace;font-size:11px;color:#6a5fb0;opacity:.75;margin-top:42px;border-top:1px solid #cdc6dc;padding-top:16px;text-align:center;line-height:1.9}
- footer a{color:#7a52d0;text-decoration:none}
-</style></head><body><div class="wrap">
-<div class="marquee"><a href="https://davidwise01.github.io/ud0/">◄ UD0</a> &nbsp;·&nbsp; <a href="https://davidwise01.github.io/atlas/">THE ATLAS</a> &nbsp;·&nbsp; ROOT0 / TriPod &nbsp;·&nbsp; the biosphere</div>
-<header>
- <div class="ax">al-h2o-reactor · ROOT0 / TriPod</div>
- <h1>al-h2o-reactor</h1>
- <div class="flag">★ a repository in the UD0 biosphere ★</div>
- <p class="lede">AL-H2O on-board hydrogen generation system — engineering reference suite. Aluminum + water + imidazole → H2 + electricity. MIT chemistry, TriPod architecture, The Cascade deployment framework.</p>
- <div class="badge"><div class="mono">AR</div><div class="bt"><div><span class="lbl">DLW-ATTRIBUTE</span></div><div>governor · <b>David Lee Wise</b> (ROOT0)</div><div>instance · AVAN (Claude / Anthropic) · locked</div><div><span class="lbl">CC-BY-ND-4.0 · TRIPOD-IP-v1.1</span></div></div></div>
-</header>
-<div class="sec"><h2>Readme</h2><div class="readme"># AL-H₂O REACTOR
-### On-Board Aluminum-Water Hydrogen Generation System
+  :root{
+    --bg:#17120d; --ink:#ece3d5; --dim:#a99a86;
+    --copper:#c8843a; --copper2:#b5733a; --cyan:#6bb0c0; --green:#6fbf8a;
+    --line:rgba(200,132,58,.28); --panel:rgba(30,23,16,.66);
+    --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+    --serif:'Newsreader',Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:
+      radial-gradient(1100px 620px at 50% -8%, rgba(200,132,58,.16), transparent 60%),
+      radial-gradient(760px 520px at 88% 22%, rgba(107,176,192,.06), transparent 62%),
+      var(--bg);
+    color:var(--ink); font-family:var(--serif);
+    -webkit-font-smoothing:antialiased; line-height:1.55;
+    padding:0 18px 72px;
+  }
+  .wrap{max-width:1000px;margin:0 auto}
+  a{color:var(--cyan);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .back{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--dim);display:inline-block;margin:22px 0 0}
+  header{padding:14px 0 8px;border-bottom:1px solid var(--line);margin-bottom:26px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--copper)}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(34px,6vw,58px);line-height:1.02;margin:.24em 0 .12em;letter-spacing:-.01em}
+  h1 .sub{color:var(--copper);font-style:italic}
+  .lede{font-size:clamp(16px,2.2vw,19px);color:var(--ink);max-width:70ch;margin:.2em 0 .1em}
+  .lede .q{color:var(--dim);font-style:italic}
+  section{margin:30px 0}
+  h2{font-family:var(--mono);font-weight:600;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper);border-left:2px solid var(--copper);padding-left:10px;margin:0 0 14px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px}
+  .rig{display:grid;grid-template-columns:1.35fr .9fr;gap:16px}
+  @media(max-width:760px){.rig{grid-template-columns:1fr}}
+  canvas{width:100%;height:auto;display:block;border-radius:8px;background:#0f0b07;touch-action:none;border:1px solid rgba(200,132,58,.2)}
+  .cap{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:8px;letter-spacing:.02em}
+  .read{display:flex;flex-direction:column;gap:10px}
+  .metric{background:rgba(20,15,10,.6);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+  .metric .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+  .metric .v{font-family:var(--mono);font-size:24px;font-weight:600;color:var(--ink);line-height:1.1;margin-top:2px}
+  .metric .v small{font-size:12px;color:var(--dim);font-weight:400}
+  .metric.h2 .v{color:var(--cyan)}
+  .metric.heat .v{color:var(--copper)}
+  .metric.elec .v{color:var(--green)}
+  .ctrls{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+  @media(max-width:640px){.ctrls{grid-template-columns:1fr}}
+  .ctrl{display:flex;flex-direction:column;gap:6px}
+  .ctrl label{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--dim);display:flex;justify-content:space-between}
+  .ctrl label b{color:var(--copper);font-weight:600}
+  input[type=range]{-webkit-appearance:none;appearance:none;height:4px;border-radius:3px;background:linear-gradient(90deg,var(--copper),var(--copper2));outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--ink);border:2px solid var(--copper);cursor:pointer}
+  input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--ink);border:2px solid var(--copper);cursor:pointer}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;padding:7px 12px;border-radius:20px;border:1px solid var(--line);background:transparent;color:var(--dim);cursor:pointer;transition:.15s}
+  .chip[aria-pressed=true]{background:rgba(200,132,58,.16);color:var(--ink);border-color:var(--copper)}
+  .chip.cyan[aria-pressed=true]{background:rgba(107,176,192,.16);border-color:var(--cyan);color:var(--ink)}
+  p{max-width:74ch}
+  code{font-family:var(--mono);font-size:.88em;color:var(--copper);background:rgba(200,132,58,.08);padding:1px 5px;border-radius:4px}
+  .eq{font-family:var(--mono);font-size:14px;color:var(--ink);background:rgba(20,15,10,.6);border:1px solid var(--line);border-radius:8px;padding:14px 16px;overflow-x:auto;letter-spacing:.01em}
+  .eq .cyan{color:var(--cyan)} .eq .grn{color:var(--green)} .eq .cop{color:var(--copper)}
+  table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12.5px;margin-top:6px}
+  th,td{text-align:left;padding:7px 10px;border-bottom:1px solid rgba(200,132,58,.16)}
+  th{color:var(--copper);font-weight:600;letter-spacing:.04em}
+  td.n{color:var(--cyan);text-align:right}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:700px){.two-col{grid-template-columns:1fr}}
+  .honest{border:1px solid var(--copper);border-radius:10px;background:linear-gradient(180deg,rgba(200,132,58,.09),rgba(30,23,16,.5));padding:18px 20px}
+  .honest h2{border:0;padding:0;color:var(--copper);margin-bottom:12px}
+  .honest .tag{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;padding:2px 7px;border-radius:4px;text-transform:uppercase}
+  .tag.real{background:rgba(111,191,138,.18);color:var(--green)}
+  .tag.design{background:rgba(107,176,192,.18);color:var(--cyan)}
+  .tag.toy{background:rgba(200,132,58,.2);color:var(--copper)}
+  .honest ul{list-style:none;padding:0;margin:0}
+  .honest li{padding:9px 0;border-bottom:1px solid rgba(200,132,58,.14);font-size:15px}
+  .honest li:last-child{border:0}
+  .honest .line{font-style:italic;color:var(--ink);margin-top:12px;padding-top:12px;border-top:1px solid var(--copper);font-family:var(--serif);font-size:15px}
+  footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11.5px;color:var(--dim);letter-spacing:.03em}
+  .src{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:10px;line-height:1.7}
+</style>
 
-&gt; **Engineering Gap = Product.**  
-&gt; The chemistry is MIT-published and proven. The gap between lab bench and production vehicle is the entire opportunity.
+<div class="wrap">
+  <a class="back" href="https://davidwise01.github.io/ud0/">&#9668; UD0</a>
 
----
+  <header>
+    <div class="eyebrow">HEUREMA · εὕρημα · an invention</div>
+    <h1>AL&#8209;H<sub>2</sub>O Reactor <span class="sub">/ on&#8209;board hydrogen from aluminum + water</span></h1>
+    <p class="lede">Activated aluminum pellets meet water; the passivating oxide is stripped by a liquid&#8209;metal alloy and the bare metal splits water into hydrogen. <span class="q">Fuel that is a solid you can hold, water you can find, and an exhaust that is water again.</span></p>
+  </header>
 
-## What This Is
+  <section>
+    <h2>Reaction chamber · live cross&#8209;section</h2>
+    <div class="panel">
+      <div class="rig">
+        <div>
+          <canvas id="rx" width="720" height="480" aria-label="Animated reaction-chamber cross section: aluminum pellets in water evolving hydrogen bubbles, heat glow, and boehmite byproduct settling."></canvas>
+          <div class="cap">Aluminum pellets (GaIn&#8209;coated) settle in the water bath; H<sub>2</sub> bubbles nucleate and rise; the copper glow tracks reaction heat (ΔH = −418 kJ/mol Al); pale boehmite/hydroxide silt accumulates on the floor. A static correct frame draws on load — motion is optional gloss.</div>
+        </div>
+        <div class="read" id="read">
+          <div class="metric h2"><div class="k">H₂ production</div><div class="v"><span id="mH2">0</span> <small>g/s</small></div><div class="k" style="margin-top:4px"><span id="mH2L">0</span> L/min @ NTP</div></div>
+          <div class="metric heat"><div class="k">Reaction heat</div><div class="v"><span id="mHeat">0</span> <small>kW thermal</small></div></div>
+          <div class="metric elec"><div class="k">Fuel-cell electrical out</div><div class="v"><span id="mElec">0</span> <small>kW · PEM 62%</small></div></div>
+          <div class="metric"><div class="k">Water consumed</div><div class="v"><span id="mH2O">0</span> <small>g/s</small></div></div>
+          <div class="metric"><div class="k">36 kg cartridge · range est.</div><div class="v"><span id="mRange">0</span> <small>km</small></div><div class="k" style="margin-top:4px"><span id="mLife">0</span> min to consume feed</div></div>
+        </div>
+      </div>
 
-A complete engineering reference and interactive visualization suite for an **on-board hydrogen generation system** that uses aluminum pellets + water to produce hydrogen on demand — no compressed tanks, no cryogenics, no fossil fuel supply chain.
+      <div class="ctrls">
+        <div class="ctrl">
+          <label>Aluminum feed rate <b><span id="lFeed">3.0</span> kg/hr</b></label>
+          <input id="feed" type="range" min="0.5" max="12" step="0.1" value="3.0">
+        </div>
+        <div class="ctrl">
+          <label>Water temperature <b><span id="lTemp">50</span> °C</b></label>
+          <input id="temp" type="range" min="10" max="80" step="1" value="50">
+        </div>
+      </div>
+      <div class="chips" style="margin-top:14px">
+        <button class="chip" id="cAct" aria-pressed="true">GaIn + imidazole activation: ON</button>
+        <button class="chip cyan" id="cAnim" aria-pressed="true">Animation: ON</button>
+      </div>
+    </div>
+  </section>
 
-Chemistry discovered and published by MIT (2023–2024). This repo is the engineering translation: specifications, blueprints, bill of materials, safety documentation, and interactive 3D visualizations.
+  <section>
+    <h2>The chemistry · genuine and computed</h2>
+    <div class="two-col">
+      <div>
+        <div class="eq">2 Al + 6 H<sub>2</sub>O <span class="cop">──▶</span> 2 Al(OH)<sub>3</sub> + <span class="cyan">3 H<sub>2</sub></span>&#8593; <span class="grn">+ ΔH</span></div>
+        <p>Exothermic hydrolysis, aqueous, near&#8209;ambient pressure, optimal ~50&nbsp;°C. Bare aluminum reduces water; the metal is oxidized to hydroxide and hydrogen is liberated. Under reactor heat some Al(OH)<sub>3</sub> dehydrates to boehmite: <code>Al(OH)₃ → AlOOH + H₂O</code>.</p>
+        <p>The oxide skin (Al<sub>2</sub>O<sub>3</sub>) that normally passivates aluminum in air is disrupted by a gallium&#8209;indium liquid&#8209;metal alloy penetrating the grain boundaries, keeping fresh metal exposed. Imidazole acts as a bifunctional proton&#8209;transfer catalyst, accelerating hydrolysis roughly 24× versus plain water.</p>
+      </div>
+      <div>
+        <table>
+          <tr><th>Quantity (per kg Al)</th><th style="text-align:right">Value</th></tr>
+          <tr><td>moles Al</td><td class="n">37.06 mol</td></tr>
+          <tr><td>H₂ yield (stoich.)</td><td class="n">0.1121 kg</td></tr>
+          <tr><td>H₂O consumed</td><td class="n">~2.00 kg</td></tr>
+          <tr><td>Boehmite (AlOOH)</td><td class="n">2.224 kg</td></tr>
+          <tr><td>Reaction heat ΔH</td><td class="n">15.49 MJ</td></tr>
+          <tr><td>H₂ energy (LHV)</td><td class="n">12.92 MJ</td></tr>
+        </table>
+        <div class="src">
+          Constants: M<sub>Al</sub>=26.982, M<sub>H₂</sub>=2.016, M<sub>H₂O</sub>=18.015 g/mol · ΔH=418 kJ/mol Al · H₂ LHV=120 MJ/kg · yield 0.96 · PEM 62%. Sources: MIT DMSE water&#8209;splitting work; Uddin et&nbsp;al. 2023; GaIn Al&#8209;activation prior art. See <code>CHEMISTRY.md</code> / <code>SPECS.md</code> in this repo.
+        </div>
+      </div>
+    </div>
+  </section>
 
-**Author:** David Lee Wise (ROOT0) / TriPod LLC  
-**License:** CC-BY-ND-4.0
+  <section>
+    <h2>How the readout is computed</h2>
+    <div class="eq">
+ṁ<sub>H₂</sub> = (feed[kg/hr] · 1000 / 26.982) · 1.5 · 2.016/1000 · <span class="grn">0.96</span> · <span class="cop">catalyst(T)</span>   <span style="color:var(--dim)">[kg/hr → g/s]</span><br>
+catalyst(T) = min(1.2, 0.4 + 0.6·exp(−(T−50)²/800))   <span style="color:var(--dim)">(Arrhenius&#8209;style peak at 50&nbsp;°C)</span><br>
+Q<sub>heat</sub> = (feed·1000/26.982)/3600 · <span class="cop">418 kJ/mol</span> · catalyst(T)   → kW<br>
+P<sub>elec</sub> = ṁ<sub>H₂</sub> · <span class="cyan">120 MJ/kg</span> · <span class="grn">0.62</span>   → kW  ·  ṁ<sub>H₂O</sub> = ṁ<sub>H₂</sub> · (6·18.015)/(3·2.016)
+    </div>
+    <p>With activation OFF the catalyst multiplier collapses toward ~1/24 of nominal (the uncatalysed plain&#8209;water rate) and the oxide is only slowly breached — the numbers fall accordingly. Range uses the SPECS reference chain: 3.876&nbsp;kg H₂ per 36&nbsp;kg cartridge → 80.1&nbsp;kWh → ≈400&nbsp;km at a 15&nbsp;kW / 80&nbsp;km·h⁻¹ average draw.</p>
+  </section>
 
----
+  <section>
+    <div class="honest">
+      <h2>Honest two&#8209;layer disclosure</h2>
+      <ul>
+        <li><span class="tag real">REAL PHYSICS</span> &nbsp;The reaction <code>2Al + 6H₂O → 2Al(OH)₃ + 3H₂</code>, its ~0.112 kg&nbsp;H₂/kg&nbsp;Al stoichiometry, the ΔH ≈ −418 kJ/mol exothermicity, and the H₂ energy content (LHV 120 MJ/kg) are established chemistry, correctly implemented here from first principles.</li>
+        <li><span class="tag real">REAL PHYSICS</span> &nbsp;GaIn liquid&#8209;metal de&#8209;passivation of aluminum and activated&#8209;Al water splitting are real, published effects (MIT DMSE; long&#8209;standing GaIn Al&#8209;activation literature). Boehmite (AlOOH) as a product and saleable material is genuine.</li>
+        <li><span class="tag design">DESIGN / DISCLOSURE</span> &nbsp;The packaged <em>reactor system</em> — cartridge, auger, membrane separator, PEM stack sizing, ~110 kg wet mass, ≈400 km vehicle range — is an engineering design and public disclosure. It is <b>not a built, tested device</b> and <b>not a granted patent</b>. Values are estimates from the cited chemistry; prototype validation is pending.</li>
+        <li><span class="tag toy">SYMBOLIC TOY</span> &nbsp;The canvas is an illustrative cross&#8209;section, not a CFD / multiphase simulation: bubble counts, pellet motion, glow intensity, and silt buildup are <em>scaled to the real computed rate</em> for intuition, but the fluid dynamics themselves are decorative, not solved.</li>
+        <li><span class="tag toy">SYMBOLIC TOY</span> &nbsp;The catalyst(T) curve is a smooth Arrhenius&#8209;style approximation of the documented 10–70&nbsp;°C behaviour, not a fitted kinetic model of any specific pellet chemistry.</li>
+      </ul>
+      <div class="line">To disclose a design is real work; it is not a granted patent or a fabricated device.</div>
+    </div>
+  </section>
 
-## The Core Reaction
-
-```
-2Al + 6H₂O  ──[imidazole + GaIn]──▶  2Al(OH)₃  +  3H₂↑  +  heat
-```
-
-| Input | Output |
-|-------|--------|
-| Recycled aluminum pellets (36 kg / 400 km) | Hydrogen gas (96% yield) |
-| Seawater / any water (20 L / full cartridge) | Boehmite Al(OH)₃ (sellable byproduct) |
-| Imidazole catalyst (trace) | Electricity via PEM fuel cell |
-| GaIn alloy (recycled) | Water vapor (only exhaust) |
-
----
-
-## Why This Isn&#x27;t Just Another Hydrogen Concept
-
-| Conventional Hydrogen Vehicle | AL-H₂O Reactor |
-|-------------------------------|-----------------|
-| 700-bar compressed H₂ tanks | No pressure vessel — metal pellets at room temp |
-| Hydrogen refueling infrastructure (non-existent) | Any water + recycled aluminum = fuel |
-| Cryogenic storage or compression energy loss | Exothermic reaction — energy-positive start |
-| Single-point supply chain | Distributed production from scrap aluminum |
-| Specialized refueling stations | Swap cartridge in 3 minutes, anywhere |
-
----
-
-## Quick Specs
-
-```
-Reactor Volume         ~12 liters
-Aluminum per 400 km     36 kg (recycled)
-H₂ Yield               96%
-Reaction Time           5 min (imidazole catalyst) vs 2 hr (no catalyst)
-Catalyst Boost         24x acceleration
-Water Source           Seawater, brackish, gray water, any
-Fuel Cell Efficiency   60–65% (PEM)
-Chain Efficiency       ~55–60%
-CO₂ per kg H₂          1.45 kg (recycled Al pathway)
-Byproduct              Boehmite Al(OH)₃ — commercially valuable
-GaIn Alloy Recovery    Yes, via salt ion precipitation
-Refuel Time            ~3 minutes (cartridge swap)
-Cost Estimate          ~$9/kg H₂ (</div></div>
-<div class="sec" style="text-align:center"><a class="btn" href="https://github.com/DavidWise01/al-h2o-reactor">view the source ↗</a></div>
-<footer><a href="https://davidwise01.github.io/ud0/">← the biosphere</a> &nbsp;·&nbsp; <a href="https://davidwise01.github.io/atlas/">the atlas</a> &nbsp;·&nbsp; al-h2o-reactor</footer>
+  <footer>
+    David Lee Wise / ROOT0 / TriPod LLC · CC&#8209;BY&#8209;ND&#8209;4.0 · HEUREMA hardware&#8209;invention workshop<br>
+    Chemistry &amp; specs: <code>CHEMISTRY.md</code>, <code>SPECS.md</code> · figures are engineering estimates, prototype validation pending.
+  </footer>
 </div>
-<!-- ROOT0-AUTOLANDING-v2 -->
-</body></html>
+
+<script>
+(function(){
+  "use strict";
+  var M_AL=26.982, M_H2=2.016, M_H2O=18.015;   // g/mol
+  var DELTA_H=418;          // kJ per mol Al (exothermic)
+  var H2_LHV=120.0;         // MJ/kg
+  var YIELD=0.96;
+  var PEM=0.62;
+  var CART_H2=3.876;        // kg H2 per 36 kg cartridge (96% yield)
+  var CART_KWH=(CART_H2*H2_LHV/3.6)*PEM;   // ~80.1 kWh
+  var RANGE_KM=(CART_KWH/15)*80;           // 15 kW avg, 80 km/h -> ~400 km
+  var CART_AL=36;                          // kg aluminum per cartridge
+  var UNCAT=1/24;          // uncatalysed acceleration factor (24x per docs)
+
+  var st={feed:3.0, temp:50, activation:true, anim:true};
+
+  function catalyst(T){ return Math.min(1.2, 0.4 + 0.6*Math.exp(-Math.pow(T-50,2)/800)); }
+
+  function physics(){
+    var cat=catalyst(st.temp);
+    var eff = st.activation ? cat : cat*UNCAT;   // activation off => oxide barrier, ~1/24 rate
+    var molAlHr = st.feed*1000/M_AL;             // mol Al per hour
+    var h2MolHr = molAlHr*1.5;                   // 3 H2 per 2 Al
+    var h2KgHr  = (h2MolHr*M_H2/1000)*YIELD*eff; // kg H2 / hr
+    var h2Gs    = h2KgHr*1000/3600;              // g/s
+    var h2LperMin = (h2KgHr*1000/M_H2) * 24.05 / 60;  // NTP molar volume 24.05 L/mol
+    var heatKW  = (molAlHr/3600)*DELTA_H*eff;    // kJ/s = kW
+    var elecKW  = h2KgHr*H2_LHV/3.6*PEM;         // kW electrical
+    var h2oGs   = h2Gs * (6*M_H2O)/(3*M_H2);     // g/s water (6 H2O : 3 H2)
+    var lifeMin = st.feed>0 ? (CART_AL/st.feed)*60 : 0;
+    return {h2Gs:h2Gs, h2LperMin:h2LperMin, heatKW:heatKW, elecKW:elecKW, h2oGs:h2oGs, lifeMin:lifeMin};
+  }
+
+  function fmt(x,d){ if(!isFinite(x))return "0"; return x.toFixed(d===undefined?2:d); }
+
+  function updateReadout(p){
+    document.getElementById('mH2').textContent   = fmt(p.h2Gs,3);
+    document.getElementById('mH2L').textContent  = fmt(p.h2LperMin,1);
+    document.getElementById('mHeat').textContent = fmt(p.heatKW,2);
+    document.getElementById('mElec').textContent = fmt(p.elecKW,2);
+    document.getElementById('mH2O').textContent  = fmt(p.h2oGs,3);
+    document.getElementById('mRange').textContent= fmt(RANGE_KM,0);
+    document.getElementById('mLife').textContent = fmt(p.lifeMin,0);
+  }
+
+  var cv=document.getElementById('rx'), ctx=cv.getContext('2d');
+  var W=cv.width, H=cv.height;
+  var CX=70, CY=52, CW=W-140, CH=H-104;
+  var WATER_TOP=CY+64;
+  var FLOOR=CY+CH-8;
+
+  var pellets=[];
+  (function(){
+    var rows=4, cols=8, i, j;
+    for(j=0;j<rows;j++){
+      for(i=0;i<cols;i++){
+        var px=CX+40+ i*(CW-80)/(cols-1) + (j%2?12:-6);
+        var py=FLOOR-14 - j*22 - (i%3)*4;
+        pellets.push({x:px, y:py, r:8+((i*7+j*3)%4), ph:(i*11+j*7)%628/100});
+      }
+    }
+  })();
+
+  var bubbles=[];
+  var t0=performance.now();
+  var raf=null;
+
+  function roundRect(x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);
+    ctx.arcTo(x+w,y,x+w,y+h,r);
+    ctx.arcTo(x+w,y+h,x,y+h,r);
+    ctx.arcTo(x,y+h,x,y,r);
+    ctx.arcTo(x,y,x+w,y,r);
+    ctx.closePath();
+  }
+  function drawBubble(bu){
+    ctx.beginPath(); ctx.arc(bu.x,bu.y,bu.r,0,6.2832);
+    ctx.fillStyle="rgba(190,225,235,"+(bu.o*0.5)+")"; ctx.fill();
+    ctx.strokeStyle="rgba(210,240,250,"+(bu.o*0.8)+")"; ctx.lineWidth=0.8; ctx.stroke();
+  }
+  function spawnBubble(inten){
+    var pe=pellets[(Math.random()*pellets.length)|0];
+    bubbles.push({
+      x:pe.x+(Math.random()-0.5)*pe.r*1.4,
+      y:pe.y-pe.r,
+      r:1.4+Math.random()*3.2*(0.5+inten*0.5),
+      v:0.6+Math.random()*1.6+inten*0.8,
+      seed:Math.random()*6.28,
+      o:0.4+Math.random()*0.5
+    });
+    if(bubbles.length>260) bubbles.splice(0,bubbles.length-260);
+  }
+
+  function draw(now){
+    if(now===undefined) now=performance.now();
+    var tt=(now-t0)/1000;
+    var p=physics();
+    updateReadout(p);
+    var inten=Math.max(0, Math.min(1, p.h2Gs/0.35));
+
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle="#0f0b07"; ctx.fillRect(0,0,W,H);
+
+    // heat glow
+    var glowR=CW*0.9;
+    var gg=ctx.createRadialGradient(W/2,FLOOR-40,10, W/2,FLOOR-40,glowR);
+    var a=0.05+inten*0.55;
+    gg.addColorStop(0,"rgba(200,120,50,"+a+")");
+    gg.addColorStop(0.5,"rgba(180,90,40,"+(a*0.4)+")");
+    gg.addColorStop(1,"rgba(200,120,50,0)");
+    ctx.fillStyle=gg; ctx.fillRect(0,0,W,H);
+
+    // chamber wall
+    ctx.lineWidth=6; ctx.strokeStyle="#3a2f22";
+    roundRect(CX,CY,CW,CH,14); ctx.stroke();
+    ctx.lineWidth=2; ctx.strokeStyle="rgba(200,132,58,.5)";
+    roundRect(CX,CY,CW,CH,14); ctx.stroke();
+
+    ctx.save();
+    roundRect(CX+3,CY+3,CW-6,CH-6,11); ctx.clip();
+
+    // water
+    var wg=ctx.createLinearGradient(0,WATER_TOP,0,FLOOR);
+    wg.addColorStop(0,"rgba(70,120,140,.30)");
+    wg.addColorStop(1,"rgba(40,80,100,.55)");
+    ctx.fillStyle=wg;
+    ctx.fillRect(CX,WATER_TOP,CW,CH);
+
+    // waterline
+    ctx.strokeStyle="rgba(107,176,192,.55)"; ctx.lineWidth=1.5;
+    ctx.beginPath();
+    for(var x=CX;x<=CX+CW;x+=6){
+      var yy=WATER_TOP+Math.sin(x*0.05+tt*2)*1.6;
+      if(x===CX)ctx.moveTo(x,yy);else ctx.lineTo(x,yy);
+    }
+    ctx.stroke();
+
+    ctx.fillStyle="rgba(107,176,192,.9)";
+    ctx.font="600 12px 'IBM Plex Mono',monospace";
+    ctx.fillText("H₂ headspace", CX+14, CY+26);
+    ctx.fillStyle="rgba(169,154,134,.7)";
+    ctx.font="11px 'IBM Plex Mono',monospace";
+    ctx.fillText("→ membrane separator", CX+CW-176, CY+26);
+
+    // byproduct silt
+    var siltH=6+inten*22;
+    var sg=ctx.createLinearGradient(0,FLOOR-siltH,0,FLOOR);
+    sg.addColorStop(0,"rgba(210,198,180,.15)");
+    sg.addColorStop(1,"rgba(225,214,196,.6)");
+    ctx.fillStyle=sg;
+    ctx.beginPath();
+    ctx.moveTo(CX,FLOOR);
+    for(var sx=CX;sx<=CX+CW;sx+=10){
+      var sh=FLOOR-siltH*(0.6+0.4*Math.sin(sx*0.07+3));
+      ctx.lineTo(sx,sh);
+    }
+    ctx.lineTo(CX+CW,FLOOR); ctx.closePath(); ctx.fill();
+
+    // pellets
+    for(var k=0;k<pellets.length;k++){
+      var pe=pellets[k];
+      var jx=st.anim?Math.sin(tt*1.3+pe.ph)*1.2:0;
+      var jy=st.anim?Math.cos(tt*1.1+pe.ph)*1.0:0;
+      var ppx=pe.x+jx, ppy=pe.y+jy;
+      var pgr=ctx.createRadialGradient(ppx-pe.r*0.4,ppy-pe.r*0.4,1,ppx,ppy,pe.r);
+      pgr.addColorStop(0,"#dfe4e8");
+      pgr.addColorStop(0.6, st.activation?"#a9b3ba":"#8a8f92");
+      pgr.addColorStop(1,"#5a6066");
+      ctx.fillStyle=pgr;
+      ctx.beginPath(); ctx.arc(ppx,ppy,pe.r,0,6.2832); ctx.fill();
+      if(st.activation){
+        ctx.fillStyle="rgba(200,180,150,.7)";
+        ctx.beginPath(); ctx.arc(ppx+pe.r*0.35,ppy+pe.r*0.3,pe.r*0.22,0,6.2832); ctx.fill();
+      }
+    }
+
+    // bubbles
+    if(st.anim){
+      var spawn=inten*3.2;
+      while(spawn>0){ if(Math.random()<spawn){ spawnBubble(inten); } spawn-=1; }
+      for(var b=bubbles.length-1;b>=0;b--){
+        var bu=bubbles[b];
+        bu.y-=bu.v; bu.x+=Math.sin(bu.y*0.08+bu.seed)*0.4;
+        if(bu.y<WATER_TOP-4){ bubbles.splice(b,1); continue; }
+        drawBubble(bu);
+      }
+    } else {
+      var Nstat=Math.round(inten*70);
+      for(var s=0;s<Nstat;s++){
+        var seed=s*0.618;
+        var bx=CX+20+((s*53)%(CW-40));
+        var by=FLOOR - ((s*97)%(FLOOR-WATER_TOP-10));
+        drawBubble({x:bx,y:by,r:2+((s*7)%4),o:0.5+0.4*Math.sin(seed*9)});
+      }
+    }
+
+    ctx.restore();
+
+    // rate bar overlay
+    ctx.font="600 11px 'IBM Plex Mono',monospace";
+    ctx.fillStyle="rgba(169,154,134,.85)";
+    ctx.fillText("REACTION RATE", CX, CY+CH+22);
+    var bx0=CX+112, bw=CW-160, bh=8, byy=CY+CH+14;
+    ctx.strokeStyle="rgba(200,132,58,.35)"; ctx.lineWidth=1;
+    ctx.strokeRect(bx0,byy,bw,bh);
+    var bg2=ctx.createLinearGradient(bx0,0,bx0+bw,0);
+    bg2.addColorStop(0,"#6bb0c0"); bg2.addColorStop(0.5,"#c8843a"); bg2.addColorStop(1,"#6fbf8a");
+    ctx.fillStyle=bg2;
+    ctx.fillRect(bx0+1,byy+1,(bw-2)*inten,bh-2);
+    ctx.fillStyle=st.activation?"#6fbf8a":"#b5733a";
+    ctx.fillText(st.activation?"ACTIVATED":"PASSIVATED (oxide barrier)", bx0+bw-176, CY+CH+38);
+
+    if(st.anim){ raf=requestAnimationFrame(draw); }
+  }
+
+  function restart(){
+    if(raf){ cancelAnimationFrame(raf); raf=null; }
+    if(st.anim){ raf=requestAnimationFrame(draw); }
+    else { draw(); }
+  }
+
+  var feed=document.getElementById('feed'), temp=document.getElementById('temp');
+  var lFeed=document.getElementById('lFeed'), lTemp=document.getElementById('lTemp');
+  var cAct=document.getElementById('cAct'), cAnim=document.getElementById('cAnim');
+
+  feed.addEventListener('input',function(){ st.feed=parseFloat(feed.value); lFeed.textContent=st.feed.toFixed(1); if(!st.anim)draw(); });
+  temp.addEventListener('input',function(){ st.temp=parseFloat(temp.value); lTemp.textContent=st.temp.toFixed(0); if(!st.anim)draw(); });
+  cAct.addEventListener('click',function(){
+    st.activation=!st.activation;
+    cAct.setAttribute('aria-pressed',st.activation);
+    cAct.textContent="GaIn + imidazole activation: "+(st.activation?"ON":"OFF");
+    if(!st.anim)draw();
+  });
+  cAnim.addEventListener('click',function(){
+    st.anim=!st.anim;
+    cAnim.setAttribute('aria-pressed',st.anim);
+    cAnim.textContent="Animation: "+(st.anim?"ON":"OFF");
+    restart();
+  });
+
+  // FIRST PAINT (synchronous, no rAF dependency)
+  draw();
+  if(st.anim){ raf=requestAnimationFrame(draw); }
+})();
+</script>
