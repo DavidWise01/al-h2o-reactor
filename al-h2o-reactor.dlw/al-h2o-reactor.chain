@@ -2,8 +2,8 @@ ROOT0-DLW-CHAIN-v1
 index : 926
 slug  : al-h2o-reactor
 seal  : e2269ca26e0e5dcd587bc25572f42a450edca1a7b6b3bacb547290c0ba7247c1
-prev  : f185bec177c82ce3253610bbfe8245827ea42b89606541162ef61cec62c4f110
-link  : 83f72d01fecc136fd27abfb3ddac99f66628299c5325b7d7529bfb7fa119814f
-head  : 13f9ace173ef2e60af38912ba329b4afcb5a38b84a0e4495e8d30327f8c99cc2
+prev  : 2e7d5765f92f061d8aa724fa363b03b21d7c46f169ecfc809b074cded8be263c
+link  : 1726b4094f6691e3cd13e4b4b6951b4e1f80779f9caa55251ce8a27f1838ad43
+head  : f7444724835fd968bd2eac85811f9fa823a18d20a57907b4fade8d96b70b5409
 
 — the tether: link = sha256(index|slug|seal|prev). the chain head commits to the whole corpus.
